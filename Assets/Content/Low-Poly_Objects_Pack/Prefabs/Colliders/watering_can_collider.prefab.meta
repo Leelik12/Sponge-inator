@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 4f2f01bfe31d527478c76f8faa1ac0bc
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 241890
+  packageName: Low-Poly Objects Pack
+  packageVersion: 1.2
+  assetPath: Assets/Low-Poly_Objects_Pack/Prefabs/Colliders/watering_can_collider.prefab
+  uploadId: 696813

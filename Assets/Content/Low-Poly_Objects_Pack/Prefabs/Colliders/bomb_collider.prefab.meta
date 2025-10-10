@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: d8195a31cc0f35c428c07cab0d31d530
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 241890
+  packageName: Low-Poly Objects Pack
+  packageVersion: 1.2
+  assetPath: Assets/Low-Poly_Objects_Pack/Prefabs/Colliders/bomb_collider.prefab
+  uploadId: 696813

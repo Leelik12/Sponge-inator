@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: afe2df619f1e4c14aac0a5849477ad92
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 241890
+  packageName: Low-Poly Objects Pack
+  packageVersion: 1.2
+  assetPath: Assets/Low-Poly_Objects_Pack/Prefabs/Colliders/water_mine_collider.prefab
+  uploadId: 696813

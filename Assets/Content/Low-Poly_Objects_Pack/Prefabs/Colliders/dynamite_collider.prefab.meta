@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: d0d5cd1b4fb9ec74081862690bce921a
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 241890
+  packageName: Low-Poly Objects Pack
+  packageVersion: 1.2
+  assetPath: Assets/Low-Poly_Objects_Pack/Prefabs/Colliders/dynamite_collider.prefab
+  uploadId: 696813

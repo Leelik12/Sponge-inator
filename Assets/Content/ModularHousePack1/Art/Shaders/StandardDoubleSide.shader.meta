@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: d45b9b71872a0bf4fb133c84e43106af
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  preprocessorOverride: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 236466
+  packageName: Modular House Pack 1
+  packageVersion: 1.0
+  assetPath: Assets/ModularHousePack1/Art/Shaders/StandardDoubleSide.shader
+  uploadId: 547248

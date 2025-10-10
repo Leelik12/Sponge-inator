@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 02fccd4b8e5db52448a4625a8fc839e9
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 241890
+  packageName: Low-Poly Objects Pack
+  packageVersion: 1.2
+  assetPath: Assets/Low-Poly_Objects_Pack/Prefabs/Colliders/wheel_collider.prefab
+  uploadId: 696813

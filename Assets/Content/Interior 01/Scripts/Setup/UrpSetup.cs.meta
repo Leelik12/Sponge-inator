@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 97a548140a8d9c24a9aeca63c1c4fc82
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 295074
+  packageName: Bedroom / Interior - Low Poly assets
+  packageVersion: 1.1.5
+  assetPath: Assets/Fries and Seagull/Interior 01/Scripts/Setup/UrpSetup.cs
+  uploadId: 721210

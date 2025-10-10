@@ -1,0 +1,53 @@
+Welcome!
+
+Our models are now preconfigured for Universal Render Pipeline (URP) by default. This means that upon opening the project, everything is already set up and ready to use with URP.
+However, we also provide tools to convert the project to Built-In (SRP) or HDRP, depending on your needs.
+
+Inside the folder Render_Pipeline_Convert, you will find three Unity packages:
+- Unity_6_Built-In_source.unitypackage
+- Unity_6_URP_source.unitypackage
+- Unity_6_HDRP_source.unitypackage
+
+These packages automatically convert all shaders and materials in the project to the corresponding Render Pipeline.
+
+1. Switching to Built-In Render Pipeline
+If you want to switch the project from URP to Built-In:
+- Open your project in Unity.
+- Navigate to the Assets/Render_Pipeline_Convert folder.
+- Double-click on Unity_6_Built-In_source.unitypackage.
+- Click Import to apply the conversion.
+This package will replace URP shaders with Built-In versions for all materials and set the appropriate project settings.
+
+2. Switching to HDRP
+If you prefer to use the High Definition Render Pipeline (HDRP):
+- Open your project in Unity.
+- Go to Assets/Render_Pipeline_Convert.
+- Double-click on Unity_6_HDRP_source.unitypackage.
+- Click Import to begin the conversion.
+This package updates your materials and shaders to HDRP-compatible versions and configures the project accordingly.
+
+3. Reverting to URP (if needed)
+If at any time you want to return to URP:
+- Open the project in Unity.
+- Go to Assets/Render_Pipeline_Convert.
+- Double-click on Unity_6_URP_source.unitypackage.
+- Click Import.
+This will revert all materials and render settings back to URP.
+
+Additional Manual Options (if you prefer to do it yourself)
+
+Installing URP manually:
+- Open Unity.
+- Go to Window > Package Manager.
+- In the Unity Registry, install Universal RP.
+- Use Window > Rendering > Render Pipeline Converter to upgrade materials and settings from Built-In to URP.
+
+Installing HDRP manually:
+- Open Unity.
+- Go to Window > Package Manager.
+- Install High Definition RP.
+- Use Window > Rendering > HDRP Wizard, scroll to "Convert All Built-In Materials to HDRP" and click Proceed (make sure to back up your project first).
+
+Conclusion
+We hope this setup allows you to work comfortably in the render pipeline that best fits your project.
+If you need help or run into issues — feel free to reach out via our Discord server: https://discord.com/invite/jxrQM8hXnd

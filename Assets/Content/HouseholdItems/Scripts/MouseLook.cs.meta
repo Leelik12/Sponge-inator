@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 17f540218ac03404c9bb8ff88677b8f0
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 249507
+  packageName: Low Poly Basic Items Pack - Household Items
+  packageVersion: 1.0
+  assetPath: Assets/Kabungus/HouseholdItems/Scripts/MouseLook.cs
+  uploadId: 582139
