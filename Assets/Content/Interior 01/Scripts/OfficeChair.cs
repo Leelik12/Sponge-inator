@@ -9,7 +9,7 @@ namespace Seagull.Interior_01 {
         [SerializeField] private List<WheelCollider> wheelColliders;
 
         private void FixedUpdate() {
-            Vector3 velocity = mainBody.velocity;
+            Vector3 velocity = mainBody.linearVelocity;
             Vector2 velocity2 = new Vector2(velocity.x, velocity.z);
             float angleRadians = Mathf.Atan2(velocity2.y, velocity2.x);
             float angleDegrees = angleRadians * Mathf.Rad2Deg;
