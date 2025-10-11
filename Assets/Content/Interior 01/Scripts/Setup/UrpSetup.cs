@@ -73,7 +73,7 @@ namespace Seagull.Interior_01.Setup {
 
         [MenuItem("Tools/Fries/Interior 01/Setup Universal Rendering Pipeline")]
         public static void setup1() {
-            RenderPipelineAsset currentRP = GraphicsSettings.renderPipelineAsset;
+            RenderPipelineAsset currentRP = GraphicsSettings.defaultRenderPipeline;
         
             if (currentRP == null) {
                 Debug.LogError("Current Render Pipeline is not URP");
