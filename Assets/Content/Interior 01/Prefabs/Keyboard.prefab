@@ -135,7 +135,9 @@ PrefabInstance:
       value: Keyboard
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2247933505895898685, guid: 2cbabcf6b1d965f47adcfc1635a9d698, type: 3}
+    - {fileID: 4036048349629330412, guid: 2cbabcf6b1d965f47adcfc1635a9d698, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2cbabcf6b1d965f47adcfc1635a9d698, type: 3}
