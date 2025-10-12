@@ -16,7 +16,7 @@ public class MenuController1 : MonoBehaviour
     public void PlayGame()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("FatyanovTests");
     }
 
     public void OpenMainMenu()
