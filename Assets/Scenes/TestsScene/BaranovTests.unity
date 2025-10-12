@@ -476,6 +476,11 @@ MonoBehaviour:
   wobbleAmount: 0.4
   wobbleSpeed: 7.12
   squishRecovery: 6.55
+  jumpForce: 5
+  groundCheckDistance: 0.6
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 4294967295
   baseMoveSpeed: 5
   waterScaleMultiplier: {x: 1, y: 1, z: 1}
 --- !u!114 &56100685
