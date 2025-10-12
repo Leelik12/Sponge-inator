@@ -21,7 +21,7 @@ public class EnemyAI : MonoBehaviour
 
     [Header("Combat Movement")]
     public float stopDistance = 3f;
-    private float patrolStoppingDistance = 0.1f; // для патруля
+    private float patrolStoppingDistance = 0.1f; // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
     private NavMeshAgent agent;
     private Transform player;
@@ -69,11 +69,11 @@ public class EnemyAI : MonoBehaviour
         {
             if (hit.transform == transform) continue;
 
-            Vector3 eyePos = transform.position + Vector3.up * 1.0f; // глаз врага
+            Vector3 eyePos = transform.position + Vector3.up * 1.0f; // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
             Vector3 dir = (hit.transform.position - eyePos).normalized;
             float distance = Vector3.Distance(eyePos, hit.transform.position);
 
-            // проверяем, что нет препятствий
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             if (!Physics.Raycast(eyePos, dir, distance, ~targetLayer))
             {
                 player = hit.transform;
@@ -101,13 +101,13 @@ public class EnemyAI : MonoBehaviour
             agent.isStopped = true;
         }
 
-        // Поворот к игроку
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         Vector3 lookDir = player.position - transform.position;
         lookDir.y = 0;
         if (lookDir != Vector3.zero)
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(lookDir), Time.deltaTime * 8f);
 
-        // Стрельба
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         if (distance <= shootingRange && attackTimer <= 0f)
         {
             Attack();
@@ -121,23 +121,23 @@ public class EnemyAI : MonoBehaviour
         Vector3 targetPoint = patrolPoints[currentPatrolIndex].position;
         float distanceToPoint = Vector3.Distance(transform.position, targetPoint);
 
-        // Если достигли точки (с учётом небольшого порога)
+        // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ)
         if (distanceToPoint <= 0.1f)
         {
             waitTimer += Time.deltaTime;
             if (waitTimer >= waitTimeAtPoint)
             {
-                // Смена на следующую точку
+                // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
                 currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
                 agent.destination = patrolPoints[currentPatrolIndex].position;
-                agent.stoppingDistance = 0f; // для патруля подходить вплотную
+                agent.stoppingDistance = 0f; // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 waitTimer = 0f;
             }
-            agent.isStopped = true; // ждем на точке
+            agent.isStopped = true; // пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         }
         else
         {
-            // Движение к текущей точке
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
             agent.isStopped = false;
             agent.stoppingDistance = 0f;
             agent.destination = targetPoint;
@@ -153,7 +153,7 @@ public class EnemyAI : MonoBehaviour
             Vector3 dir = (player.position - shootPoint.position).normalized;
             GameObject proj = Instantiate(projectilePrefab, shootPoint.position, Quaternion.LookRotation(dir));
             if (proj.TryGetComponent<Rigidbody>(out var rb))
-                rb.velocity = dir * projectileSpeed;
+                rb.linearVelocity = dir * projectileSpeed;
 
             Debug.Log("[EnemyAI] Attacked player!");
         }
