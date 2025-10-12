@@ -7,21 +7,15 @@ public class EnemyAI : MonoBehaviour
     [Header("Detection")]
     public float detectionRadius = 15f;
     public LayerMask targetLayer;
+    public LayerMask obstructionMask; // слои, мешающие обзору
 
     [Header("Patrol")]
     public Transform[] patrolPoints;
     public float waitTimeAtPoint = 1.5f;
 
-    [Header("Attack")]
-    public GameObject projectilePrefab;
-    public Transform shootPoint;
-    public float attackCooldown = 1.2f;
-    public float projectileSpeed = 10f;
-    public float shootingRange = 8f;
-
     [Header("Combat Movement")]
     public float stopDistance = 3f;
-    private float patrolStoppingDistance = 0.1f; // для патруля
+    private float patrolStoppingDistance = 0f;
 
     private NavMeshAgent agent;
     private Transform player;
@@ -29,12 +23,14 @@ public class EnemyAI : MonoBehaviour
 
     private int currentPatrolIndex;
     private float waitTimer;
-    private float attackTimer;
+
+    // Для связи со стрельбой
+    public Transform PlayerTarget => player;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        agent.stoppingDistance = stopDistance;
+        agent.stoppingDistance = patrolStoppingDistance;
 
         if (patrolPoints.Length > 0)
         {
@@ -45,16 +41,14 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        attackTimer -= Time.deltaTime;
-
         if (!hasSpottedPlayer)
         {
             DetectPlayer();
         }
 
-        if (hasSpottedPlayer)
+        if (hasSpottedPlayer && player != null)
         {
-            FollowAndAttackPlayer();
+            FollowPlayer();
         }
         else
         {
@@ -69,26 +63,24 @@ public class EnemyAI : MonoBehaviour
         {
             if (hit.transform == transform) continue;
 
-            Vector3 eyePos = transform.position + Vector3.up * 1.0f; // глаз врага
+            Vector3 eyePos = transform.position + Vector3.up * 1.0f;
             Vector3 dir = (hit.transform.position - eyePos).normalized;
             float distance = Vector3.Distance(eyePos, hit.transform.position);
 
-            // проверяем, что нет препятствий
-            if (!Physics.Raycast(eyePos, dir, distance, ~targetLayer))
+            // Проверяем наличие препятствий между врагом и целью
+            if (!Physics.Raycast(eyePos, dir, distance, obstructionMask))
             {
                 player = hit.transform;
                 hasSpottedPlayer = true;
+                agent.stoppingDistance = stopDistance;
                 Debug.Log("[EnemyAI] Player spotted!");
                 return;
             }
         }
     }
 
-
-    void FollowAndAttackPlayer()
+    void FollowPlayer()
     {
-        if (player == null) return;
-
         float distance = Vector3.Distance(transform.position, player.position);
 
         if (distance > stopDistance)
@@ -101,16 +93,13 @@ public class EnemyAI : MonoBehaviour
             agent.isStopped = true;
         }
 
-        // Поворот к игроку
+        // Плавно поворачиваемся к игроку
         Vector3 lookDir = player.position - transform.position;
         lookDir.y = 0;
         if (lookDir != Vector3.zero)
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(lookDir), Time.deltaTime * 8f);
-
-        // Стрельба
-        if (distance <= shootingRange && attackTimer <= 0f)
         {
-            Attack();
+            Quaternion targetRot = Quaternion.LookRotation(lookDir);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, Time.deltaTime * 8f);
         }
     }
 
@@ -121,41 +110,22 @@ public class EnemyAI : MonoBehaviour
         Vector3 targetPoint = patrolPoints[currentPatrolIndex].position;
         float distanceToPoint = Vector3.Distance(transform.position, targetPoint);
 
-        // Если достигли точки (с учётом небольшого порога)
-        if (distanceToPoint <= 0.1f)
+        if (distanceToPoint <= 0.2f)
         {
             waitTimer += Time.deltaTime;
             if (waitTimer >= waitTimeAtPoint)
             {
-                // Смена на следующую точку
                 currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
                 agent.destination = patrolPoints[currentPatrolIndex].position;
-                agent.stoppingDistance = 0f; // для патруля подходить вплотную
                 waitTimer = 0f;
             }
-            agent.isStopped = true; // ждем на точке
+            agent.isStopped = true;
         }
         else
         {
-            // Движение к текущей точке
             agent.isStopped = false;
-            agent.stoppingDistance = 0f;
+            agent.stoppingDistance = patrolStoppingDistance;
             agent.destination = targetPoint;
-        }
-    }
-
-
-    void Attack()
-    {
-        attackTimer = attackCooldown;
-        if (projectilePrefab && shootPoint && player != null)
-        {
-            Vector3 dir = (player.position - shootPoint.position).normalized;
-            GameObject proj = Instantiate(projectilePrefab, shootPoint.position, Quaternion.LookRotation(dir));
-            if (proj.TryGetComponent<Rigidbody>(out var rb))
-                rb.velocity = dir * projectileSpeed;
-
-            Debug.Log("[EnemyAI] Attacked player!");
         }
     }
 
@@ -163,10 +133,6 @@ public class EnemyAI : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, shootingRange);
-
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, stopDistance);
     }

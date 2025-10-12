@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 5065099216447045865}
   - component: {fileID: 7669435422044109163}
   - component: {fileID: 6242486829812641351}
+  - component: {fileID: 650108765748781948}
+  - component: {fileID: -1986815181575476392}
   m_Layer: 0
   m_Name: EnemySkovoroda
   m_TagString: Untagged
@@ -73,6 +75,9 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 32768
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 0
   patrolPoints:
   - {fileID: 0}
   - {fileID: 0}
@@ -80,12 +85,41 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   waitTimeAtPoint: 1.5
+  stopDistance: 3
+--- !u!114 &650108765748781948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300157371497682242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24d6ae832648d4e4a9ee83a0a2265edb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 2797272071173335557, guid: 473b9802e443b7f40b9bc23a189d7800, type: 3}
   shootPoint: {fileID: 5507417185781873354}
-  attackCooldown: 2
-  projectileSpeed: 18
-  shootingRange: 5
-  stopDistance: 3
+  gravity: 9.81
+  launchAngle: 45
+  cooldown: 2
+--- !u!114 &-1986815181575476392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300157371497682242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18f43dd2d65e98e4abe4eff96151d755, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  deathEffect: {fileID: 0}
+  destroyOnDeath: 1
+  destroyDelay: 1.5
+  showDebugLogs: 0
 --- !u!1 &432664567107396715
 GameObject:
   m_ObjectHideFlags: 0
