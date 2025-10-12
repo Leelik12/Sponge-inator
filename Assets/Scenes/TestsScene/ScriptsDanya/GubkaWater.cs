@@ -1,0 +1,89 @@
+using UnityEngine;
+using UnityEngine.UI; // понадобится для вывода уровня воды
+
+[RequireComponent(typeof(GubkaMovement))]
+public class GubkaWater : MonoBehaviour
+{
+    [Header("Water Settings")]
+    public float maxWaterCapacity = 10f;     // Максимальное количество воды
+    public float absorbSpeed = 3f;           // Скорость впитывания воды
+    public float waterGrowthFactor = 0.1f;   // Насколько увеличивается размер при полном насыщении
+    public float waterSlowFactor = 0.3f;     // Замедление при полном насыщении
+
+    [Header("UI")]
+    public Slider waterBar; // ссылка на UI-слайдер, показывающий уровень воды
+
+    [HideInInspector] public float currentWater = 0f;
+
+    private GubkaMovement movement;
+    private Vector3 baseScale;
+    private float baseSpeed;
+
+    void Start()
+    {
+        movement = GetComponent<GubkaMovement>();
+        baseScale = transform.localScale;
+        baseSpeed = movement.moveSpeed;
+
+        if (waterBar != null)
+        {
+            waterBar.minValue = 0f;
+            waterBar.maxValue = maxWaterCapacity;
+            waterBar.value = currentWater;
+        }
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Water"))
+        {
+            // Если губка полна — ничего не происходит
+            if (currentWater >= maxWaterCapacity)
+                return;
+
+            // Пытаемся получить компонент WaterSource
+            WaterSource source = other.GetComponent<WaterSource>();
+            if (source != null)
+            {
+                // Сколько губка может впитать в этот кадр
+                float request = Time.deltaTime * absorbSpeed;
+
+                // Сколько реально получила из источника
+                float absorbed = source.TransferWater(request);
+
+                // Добавляем эту воду в губку
+                if (absorbed > 0f)
+                    AbsorbWater(absorbed);
+            }
+        }
+    }
+
+    public void AbsorbWater(float amount)
+    {
+        if (currentWater >= maxWaterCapacity)
+            return;
+
+        currentWater = Mathf.Min(currentWater + amount, maxWaterCapacity);
+        UpdateScaleAndSpeed();
+        UpdateUI();
+    }
+
+    private void UpdateScaleAndSpeed()
+    {
+        // Увеличиваем размер губки в зависимости от количества воды
+        float growth = 1f + (currentWater / maxWaterCapacity) * waterGrowthFactor;
+        movement.waterScaleMultiplier = Vector3.one * growth;
+
+        // Замедляем движение (только вычисляем свой фактор)
+        float slow = 1f - (currentWater / maxWaterCapacity) * waterSlowFactor;
+
+        // Применяем только свой вклад в общую скорость
+        movement.SetWaterSlowFactor(slow);
+    }
+
+    private void UpdateUI()
+    {
+        if (waterBar != null)
+            waterBar.value = currentWater;
+    }
+}
