@@ -81,7 +81,7 @@ public class GubkaWater : MonoBehaviour
         movement.SetWaterSlowFactor(slow);
     }
 
-    private void UpdateUI()
+    internal void UpdateUI()
     {
         if (waterBar != null)
             waterBar.value = currentWater;

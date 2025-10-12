@@ -53,7 +53,7 @@ public class EnemyShooter : MonoBehaviour
         if (proj.TryGetComponent<Rigidbody>(out var rb))
         {
             rb.useGravity = true;
-            rb.velocity = velocityVector;
+            rb.linearVelocity = velocityVector;
         }
     }
 }
