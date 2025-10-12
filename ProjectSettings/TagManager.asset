@@ -8,6 +8,7 @@ TagManager:
   - Fat
   - Clear
   - Gas
+  - LoseWindow
   layers:
   - Default
   - TransparentFX
