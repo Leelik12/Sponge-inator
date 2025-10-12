@@ -87,7 +87,7 @@ public class GubkaFat : MonoBehaviour
         UpdateUI();
     }
 
-    private void UpdateMovement()
+    public void UpdateMovement()
     {
         // Вычисляем замедление от жира
         float slowMultiplier = 1f - (currentFat / maxFatCapacity) * slowFactor;

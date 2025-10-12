@@ -55,6 +55,8 @@ public class GubkaClear : MonoBehaviour
 
     public void AbsorbClear(float amount)
     {
+        bool fatChanged = false;
+
         // если есть жир Ч моющее сначала его очищает
         if (fat.currentFat > 0f)
         {
@@ -63,6 +65,7 @@ public class GubkaClear : MonoBehaviour
             // снимаем жир и расходуем Clear пропорционально
             float actualClean = Mathf.Min(fat.currentFat, cleanAmount);
             fat.currentFat -= actualClean;
+            fatChanged = true;
 
             // если жир был меньше, остаток идЄт в запас Clear
             float leftoverClear = amount - actualClean / cleanEfficiency;
@@ -75,14 +78,17 @@ public class GubkaClear : MonoBehaviour
             currentClear = Mathf.Min(currentClear + amount, maxClearCapacity);
         }
 
+        // обновл€ем UI
         UpdateUI();
         fat.UpdateUI();
-        fat.AbsorbFat(0f); // пересчЄт трени€ и скорости
+
+        // если жир изменилс€ Ч мгновенно пересчитать скорость и трение
+        if (fatChanged)
+            fat.UpdateMovement();
     }
 
     public void TryNeutralizeFat(float fatAmount)
     {
-        // предотвращаем рекурсию
         if (isNeutralizing)
             return;
 
@@ -94,11 +100,15 @@ public class GubkaClear : MonoBehaviour
             float neutralized = Mathf.Min(currentClear, fatAmount);
             currentClear -= neutralized;
             fatAmount -= neutralized;
+
+            // мгновенно обновл€ем скорость
+            fat.currentFat = Mathf.Max(0f, fat.currentFat - neutralized);
+            fat.UpdateMovement();
         }
 
         // если осталс€ жир Ч добавл€ем его в губку
         if (fatAmount > 0f)
-            fat.AddFatDirectly(fatAmount); // вызываем безопасный метод
+            fat.AddFatDirectly(fatAmount);
 
         UpdateUI();
         isNeutralizing = false;
