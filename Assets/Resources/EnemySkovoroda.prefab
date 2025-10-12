@@ -82,9 +82,9 @@ MonoBehaviour:
   waitTimeAtPoint: 1.5
   projectilePrefab: {fileID: 2797272071173335557, guid: 473b9802e443b7f40b9bc23a189d7800, type: 3}
   shootPoint: {fileID: 5507417185781873354}
-  attackCooldown: 1.2
-  projectileSpeed: 10
-  shootingRange: 8
+  attackCooldown: 2
+  projectileSpeed: 18
+  shootingRange: 5
   stopDistance: 3
 --- !u!1 &432664567107396715
 GameObject:
