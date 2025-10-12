@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class MenuController1 : MonoBehaviour
 {
     public GameObject LoseWindow;
+    public GameObject WinWindow;
 
     private void Start()
     {
@@ -30,12 +31,11 @@ public class MenuController1 : MonoBehaviour
             LoseWindow.SetActive(true);
     }
 
-    public void Rewarde()
+    public void Win()
     {
-        if (LoseWindow != null)
-            LoseWindow.SetActive(false);
+        if (WinWindow != null)
+            WinWindow.SetActive(true);
     }
-
     public void QuitGame()
     {
         Application.Quit();
