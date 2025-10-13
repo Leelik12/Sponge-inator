@@ -48,7 +48,7 @@ public class GubkaMovement : MonoBehaviour
     void FixedUpdate()
     {
         HandleMovement();
-        HandleMouseRotation();
+        //HandleMouseRotation();
         ApplyJellyEffect();
         CheckGround();
     }
@@ -61,8 +61,8 @@ public class GubkaMovement : MonoBehaviour
     void HandleMovement()
     {
         float moveInput = 0f;
-        if (Input.GetKey(KeyCode.W)) moveInput = 1f;
-        if (Input.GetKey(KeyCode.S)) moveInput = -1f;
+        if (Input.GetKey(KeyCode.W)) moveInput = -1f;
+        if (Input.GetKey(KeyCode.S)) moveInput = 1f;
 
         // Используем правый вектор губки для движения (на 90 градусов от forward)
         Vector3 move = transform.right * moveInput * moveSpeed * Time.fixedDeltaTime;
@@ -71,26 +71,26 @@ public class GubkaMovement : MonoBehaviour
         velocitySmoothing = Vector3.Lerp(velocitySmoothing, move, 0.2f);
     }
 
-    void HandleMouseRotation()
-    {
-        // Получаем позицию мыши в мировых координатах
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Plane groundPlane = new Plane(Vector3.up, transform.position);
+    //void HandleMouseRotation()
+    //{
+    //    // Получаем позицию мыши в мировых координатах
+    //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+    //    Plane groundPlane = new Plane(Vector3.up, transform.position);
 
-        if (groundPlane.Raycast(ray, out float distance))
-        {
-            Vector3 targetPoint = ray.GetPoint(distance);
+    //    if (groundPlane.Raycast(ray, out float distance))
+    //    {
+    //        Vector3 targetPoint = ray.GetPoint(distance);
 
-            // Направление от губки к точке мыши
-            Vector3 direction = (targetPoint - transform.position).normalized;
+    //        // Направление от губки к точке мыши
+    //        Vector3 direction = (targetPoint - transform.position).normalized;
 
-            // Создаем поворот только по оси Y
-            Quaternion targetRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
+    //        // Создаем поворот только по оси Y
+    //        Quaternion targetRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
 
-            // Плавно поворачиваем губку
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
-        }
-    }
+    //        // Плавно поворачиваем губку
+    //        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
+    //    }
+    //}
 
     void HandleJumpInput()
     {

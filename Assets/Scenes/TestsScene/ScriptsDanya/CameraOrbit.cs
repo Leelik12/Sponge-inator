@@ -23,6 +23,7 @@ public class CameraOrbit : MonoBehaviour
 
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         if (target == null) return;
 
         // Сохраняем начальное смещение камеры относительно цели

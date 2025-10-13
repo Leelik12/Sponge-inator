@@ -7,6 +7,8 @@ public class MenuToggle : MonoBehaviour
     [SerializeField] private Canvas menuCanvas; // Ссылка на Canvas меню
     [SerializeField] private bool startHidden = true; // Скрыть меню при старте
     [SerializeField] private MenuController1 MenuController;
+    [SerializeField] private MenuController1 Gamemanager;
+    [SerializeField] private FirstPersonLook firstPersonLook;
     //[SerializeField] private FirstPersonLook firstPersonLook;
 
     [Header("Audio Settings")]
@@ -114,15 +116,14 @@ public class MenuToggle : MonoBehaviour
     {
         if (menuOpen)
         {
-            MenuController.Pause();
-            //firstPersonLook.enabled = false;
+            Gamemanager.Pause();
+            firstPersonLook.enabled = false;
             UnlockCursor(); // Разблокируем курсор для меню
         }
         else
         {
-            MenuController.Resume();
-            //firstPersonLook.enabled = true;
-            LockCursor(); // Блокируем курсор для игры
+            Gamemanager.Resume();
+            firstPersonLook.enabled = true;
         }
     }
 
