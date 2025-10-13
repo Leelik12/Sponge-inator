@@ -93,7 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24d6ae832648d4e4a9ee83a0a2265edb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 2797272071173335557, guid: 473b9802e443b7f40b9bc23a189d7800, type: 3}
+  projectilePrefab: {fileID: 6995433921803635318, guid: e92b9608c4f20fe4daca6b0cabc4abea, type: 3}
   shootPoint: {fileID: 5507417185781873354}
   gravity: 9.81
   launchAngle: 45
@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  deathEffect: {fileID: 0}
+  deathEffect: {fileID: 5056385361940353899, guid: 5831d4dc964245b4d935906496064f8f, type: 3}
   destroyOnDeath: 1
   destroyDelay: 1.5
   showDebugLogs: 0

@@ -16,9 +16,9 @@ public class WaterJetAttack : MonoBehaviour
     [SerializeField] private bool showRangeInEditor = true; // Показать диапазон в редакторе
 
     [Header("Aiming Settings")]
-    [SerializeField] private float aimSensitivity = 0.1f; // Уменьшенная чувствительность прицеливания
+    [SerializeField] private float wheelSensitivity = 2f; // Чувствительность колесика мыши
     [SerializeField] private float maxAimAngle = 35f; // Максимальный угол отклонения прицела (в градусах)
-    [SerializeField] private bool invertVerticalAim = false; // Опция для инвертирования вертикального прицеливания
+    [SerializeField] private bool invertWheelAim = false; // Инвертировать колесико мыши
 
     [Header("Trajectory Settings")]
     [SerializeField] private LineRenderer trajectoryRenderer; // LineRenderer для отрисовки траектории
@@ -39,10 +39,8 @@ public class WaterJetAttack : MonoBehaviour
     private Vector3 savedAimDirection; // Сохраненное направление прицела
     private bool hasSavedAim = false; // Флаг сохранения прицела
 
-    // Для плавного прицеливания без тряски
-    private float currentHorizontalAngle = 0f;
+    // Только вертикальное прицеливание через колесико мыши
     private float currentVerticalAngle = 0f;
-    private float savedHorizontalAngle = 0f;
     private float savedVerticalAngle = 0f;
 
     // Свойство для доступа к дистанции атаки из других скриптов
@@ -66,8 +64,8 @@ public class WaterJetAttack : MonoBehaviour
             trajectoryRenderer.enabled = false;
         }
 
-        // Инициализируем направления прицеливания
-        baseAimDirection = transform.forward;
+        // Инициализируем направления прицеливания с поворотом на -90 градусов
+        baseAimDirection = Quaternion.Euler(0, -90, 0) * transform.forward; // Поворачиваем на -90 градусов
         currentAimDirection = baseAimDirection;
         savedAimDirection = baseAimDirection;
     }
@@ -90,18 +88,16 @@ public class WaterJetAttack : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             isAiming = true;
-            baseAimDirection = transform.forward; // Запоминаем текущее направление игрока
+            baseAimDirection = Quaternion.Euler(0, -90, 0) * transform.forward; // Всегда поворачиваем на -90 градусов
 
             // Восстанавливаем сохраненное направление прицела, если оно есть
             if (hasSavedAim)
             {
-                currentHorizontalAngle = savedHorizontalAngle;
                 currentVerticalAngle = savedVerticalAngle;
-                UpdateAimDirectionFromAngles();
+                UpdateAimDirectionFromAngle();
             }
             else
             {
-                currentHorizontalAngle = 0f;
                 currentVerticalAngle = 0f;
                 currentAimDirection = baseAimDirection;
             }
@@ -125,7 +121,6 @@ public class WaterJetAttack : MonoBehaviour
             if (Input.GetMouseButtonUp(1))
             {
                 // Сохраняем текущее направление прицела
-                savedHorizontalAngle = currentHorizontalAngle;
                 savedVerticalAngle = currentVerticalAngle;
                 savedAimDirection = currentAimDirection;
                 hasSavedAim = true;
@@ -141,44 +136,35 @@ public class WaterJetAttack : MonoBehaviour
 
     private void UpdateAimDirection()
     {
-        // Получаем движение мыши с уменьшенной чувствительностью
-        float mouseX = Input.GetAxis("Mouse X") * aimSensitivity;
-        float mouseY = Input.GetAxis("Mouse Y") * aimSensitivity;
+        // Получаем ввод от колесика мыши
+        float mouseWheel = Input.GetAxis("Mouse ScrollWheel") * wheelSensitivity;
 
-        // Инвертируем вертикальное управление, если нужно
-        if (invertVerticalAim)
+        // Инвертируем управление, если нужно
+        if (invertWheelAim)
         {
-            mouseY = -mouseY;
+            mouseWheel = -mouseWheel;
         }
 
-        // Обновляем углы
-        currentHorizontalAngle += mouseX;
-        currentVerticalAngle += mouseY;
+        // Обновляем вертикальный угол
+        currentVerticalAngle += mouseWheel;
 
-        // Ограничиваем углы для предотвращения тряски
-        currentHorizontalAngle = Mathf.Clamp(currentHorizontalAngle, -maxAimAngle, maxAimAngle);
+        // Ограничиваем угол для предотвращения тряски
         currentVerticalAngle = Mathf.Clamp(currentVerticalAngle, -maxAimAngle, maxAimAngle);
 
-        // Обновляем направление прицела на основе углов
-        UpdateAimDirectionFromAngles();
+        // Обновляем направление прицела на основе угла
+        UpdateAimDirectionFromAngle();
     }
 
-    private void UpdateAimDirectionFromAngles()
+    private void UpdateAimDirectionFromAngle()
     {
-        // Вычисляем новое направление с использованием сферических координат
-        // Это предотвращает тряску при достижении границ
-        Vector3 right = Vector3.Cross(Vector3.up, baseAimDirection).normalized;
-        Vector3 up = Vector3.up;
+        // Вычисляем новое направление только по вертикали
+        // Используем локальную правую ось игрока для вертикального вращения
+        Vector3 right = transform.right; // Локальная правая ось игрока
 
         currentAimDirection = baseAimDirection;
 
-        // Горизонтальное вращение - вокруг оси Y (вверх)
-        currentAimDirection = Quaternion.AngleAxis(currentHorizontalAngle, up) * currentAimDirection;
-
-        // Вертикальное вращение - вокруг локальной правой оси
-        // Обратите внимание: положительный угол поднимает прицел вверх
+        // Только вертикальное вращение - вокруг локальной правой оси игрока
         currentAimDirection = Quaternion.AngleAxis(currentVerticalAngle, right) * currentAimDirection;
-
         currentAimDirection.Normalize();
     }
 
@@ -218,7 +204,6 @@ public class WaterJetAttack : MonoBehaviour
             gubkaWater.UpdateUI(); // Обновляем UI воды
 
             // Сохраняем направление прицела после выстрела
-            savedHorizontalAngle = currentHorizontalAngle;
             savedVerticalAngle = currentVerticalAngle;
             savedAimDirection = currentAimDirection;
             hasSavedAim = true;
@@ -279,8 +264,9 @@ public class WaterJetAttack : MonoBehaviour
         }
         else
         {
-            // Стандартное прицеливание - прямо перед игроком
-            Ray ray = new Ray(startPoint, transform.forward);
+            // Стандартное прицеливание - вправо от игрока (повернуто на -90 градусов)
+            Vector3 defaultDirection = Quaternion.Euler(0, -90, 0) * transform.forward;
+            Ray ray = new Ray(startPoint, defaultDirection);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit, attackRange, ~0, QueryTriggerInteraction.Ignore))
@@ -288,7 +274,7 @@ public class WaterJetAttack : MonoBehaviour
                 return hit.point;
             }
 
-            return startPoint + transform.forward * attackRange;
+            return startPoint + defaultDirection * attackRange;
         }
     }
 
@@ -321,40 +307,57 @@ public class WaterJetAttack : MonoBehaviour
     public void ResetSavedAim()
     {
         hasSavedAim = false;
-        savedAimDirection = transform.forward;
-        savedHorizontalAngle = 0f;
+        savedAimDirection = Quaternion.Euler(0, -90, 0) * transform.forward;
         savedVerticalAngle = 0f;
+    }
+
+    // Метод для принудительной установки вертикального угла
+    public void SetVerticalAngle(float angle)
+    {
+        currentVerticalAngle = Mathf.Clamp(angle, -maxAimAngle, maxAimAngle);
+        UpdateAimDirectionFromAngle();
+    }
+
+    // Метод для получения текущего вертикального угла
+    public float GetCurrentVerticalAngle()
+    {
+        return currentVerticalAngle;
     }
 
     // Визуализация диапазона атаки и сектора прицеливания в редакторе
     private void OnDrawGizmosSelected()
     {
-        if (showRangeInEditor)
+        if (showRangeInEditor && jetStartPoint != null)
         {
-            // Диапазон атаки
+            Vector3 startPoint = jetStartPoint.position;
+
+            // Базовое направление (повернуто на -90 градусов вправо)
+            Vector3 baseDirection = Quaternion.Euler(0, -90, 0) * transform.forward;
+
+            // Диапазон атаки - сфера
             Gizmos.color = Color.yellow;
-            if (jetStartPoint != null)
-            {
-                Gizmos.DrawWireSphere(jetStartPoint.position, attackRange);
-            }
+            Gizmos.DrawWireSphere(startPoint, attackRange);
 
-            // Сектор прицеливания
+            // Основной луч (белый)
+            Gizmos.color = Color.white;
+            Gizmos.DrawRay(startPoint, baseDirection * attackRange);
+
+            // Сектор прицеливания (только вертикальный) - синий
             Gizmos.color = Color.blue;
-            Vector3 startPoint = jetStartPoint != null ? jetStartPoint.position : transform.position;
-            Vector3 baseDirection = transform.forward;
+            Vector3 right = transform.right; // Локальная правая ось для вертикального вращения
 
-            // Рисуем линии, ограничивающие сектор прицеливания
-            float angleInRadians = maxAimAngle * Mathf.Deg2Rad;
-            Vector3 leftBound = Quaternion.AngleAxis(-maxAimAngle, Vector3.up) * baseDirection;
-            Vector3 rightBound = Quaternion.AngleAxis(maxAimAngle, Vector3.up) * baseDirection;
+            // Верхняя граница сектора
+            Vector3 upBound = Quaternion.AngleAxis(maxAimAngle, right) * baseDirection;
+            Gizmos.DrawRay(startPoint, upBound * attackRange);
 
-            Gizmos.DrawRay(startPoint, leftBound * attackRange);
-            Gizmos.DrawRay(startPoint, rightBound * attackRange);
+            // Нижняя граница сектора
+            Vector3 downBound = Quaternion.AngleAxis(-maxAimAngle, right) * baseDirection;
+            Gizmos.DrawRay(startPoint, downBound * attackRange);
 
-            // Дуга сектора
-            DrawArcGizmo(startPoint, baseDirection, maxAimAngle, attackRange);
+            // Дуга между границами сектора
+            DrawVerticalArcGizmo(startPoint, baseDirection, right, maxAimAngle, attackRange);
 
-            // Отображаем сохраненное направление прицела (если есть)
+            // Отображаем сохраненное направление прицела (если есть) - зеленый
             if (hasSavedAim)
             {
                 Gizmos.color = Color.green;
@@ -363,18 +366,18 @@ public class WaterJetAttack : MonoBehaviour
         }
     }
 
-    // Вспомогательный метод для рисования дуги сектора прицеливания
-    private void DrawArcGizmo(Vector3 center, Vector3 forward, float angle, float radius)
+    // Вспомогательный метод для рисования вертикальной дуги сектора прицеливания
+    private void DrawVerticalArcGizmo(Vector3 center, Vector3 forward, Vector3 axis, float angle, float radius)
     {
-        int segments = 20;
+        int segments = 12;
         float angleStep = (angle * 2) / segments;
 
-        Vector3 previousPoint = center + Quaternion.AngleAxis(-angle, Vector3.up) * forward * radius;
+        Vector3 previousPoint = center + Quaternion.AngleAxis(-angle, axis) * forward * radius;
 
         for (int i = 1; i <= segments; i++)
         {
             float currentAngle = -angle + angleStep * i;
-            Vector3 nextPoint = center + Quaternion.AngleAxis(currentAngle, Vector3.up) * forward * radius;
+            Vector3 nextPoint = center + Quaternion.AngleAxis(currentAngle, axis) * forward * radius;
             Gizmos.DrawLine(previousPoint, nextPoint);
             previousPoint = nextPoint;
         }

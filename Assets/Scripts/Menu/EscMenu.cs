@@ -124,6 +124,7 @@ public class MenuToggle : MonoBehaviour
         {
             Gamemanager.Resume();
             firstPersonLook.enabled = true;
+            LockCursor();
         }
     }
 
