@@ -106,7 +106,7 @@ public class EnemyAI : MonoBehaviour
     void Patrol()
     {
         if (patrolPoints.Length == 0) return;
-
+        if (patrolPoints == null) return;
         Vector3 targetPoint = patrolPoints[currentPatrolIndex].position;
         float distanceToPoint = Vector3.Distance(transform.position, targetPoint);
 

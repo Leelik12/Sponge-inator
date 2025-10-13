@@ -62,9 +62,14 @@ public class HeroVoice : MonoBehaviour
 
     // ------------------- Ìועמהû הכÿ הויסעגטי -------------------
 
-    public void SayJump() => PlayRandomClip(jumpClips);
+    public void SayZhirDamage() => PlayRandomClip(ZhirdamageClips);
     public void SayAttack() => PlayRandomClip(attackClips);
-    public void SayPickup() => PlayRandomClip(pickupClips);
+    public void SaypickupWater() => PlayRandomClip(pickupWaterClips);
+    public void SaypickupSoap() => PlayRandomClip(pickupSoapClips);
+    public void SaypickupGas() => PlayRandomClip(pickupGasClips);
+    public void SaypickupZhir() => PlayRandomClip(pickupZhirClips);
+    public void SayenemyDied() => PlayRandomClip(enemyDiedClips);
+
     public void SayOther() => PlayRandomClip(otherClips);
 
     /// <summary>

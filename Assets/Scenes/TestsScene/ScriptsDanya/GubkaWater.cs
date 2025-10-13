@@ -12,7 +12,8 @@ public class GubkaWater : MonoBehaviour
 
     [Header("UI")]
     public Slider waterBar; // ссылка на UI-слайдер, показывающий уровень воды
-
+    public GameObject Lose;
+    public GameObject Win;
     [HideInInspector] public float currentWater = 0f;
 
     private GubkaMovement movement;
@@ -85,5 +86,13 @@ public class GubkaWater : MonoBehaviour
     {
         if (waterBar != null)
             waterBar.value = currentWater;
+    }
+    public void PlayerDie()
+    {
+        if(currentWater <= 0)
+        {
+            Lose.SetActive(true);
+            Time.timeScale = 0f;
+        }
     }
 }
