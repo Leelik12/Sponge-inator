@@ -54,7 +54,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7013596926864501857, guid: a4b53ff19d5bde343ac7d85bb51fb1b0, type: 3}
       propertyPath: m_Name
-      value: water_ball Variant
+      value: water_exVariant
+      objectReference: {fileID: 0}
+    - target: {fileID: 7013596926864501857, guid: a4b53ff19d5bde343ac7d85bb51fb1b0, type: 3}
+      propertyPath: m_TagString
+      value: Water
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6794695207994117670, guid: a4b53ff19d5bde343ac7d85bb51fb1b0, type: 3}
