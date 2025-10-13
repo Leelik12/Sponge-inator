@@ -14,8 +14,10 @@ public class CameraOrbit : MonoBehaviour
     [Header("View Tilt")]
     public float cameraTilt = 22f;
 
+    private float initialYaw;
+    private float initialPitch;
     private float yaw;
-    private float pitch = 10f;
+    private float pitch;
     private bool isOrbiting = false;
     private Vector3 followOffset;
 
@@ -23,11 +25,17 @@ public class CameraOrbit : MonoBehaviour
     {
         if (target == null) return;
 
-        followOffset = Quaternion.Inverse(target.rotation) * (transform.position - target.position);
+        // —охран€ем начальное смещение камеры относительно цели
+        followOffset = transform.position - target.position;
 
-        Vector3 dir = (transform.position - target.position).normalized;
-        yaw = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
-        pitch = Mathf.Asin(dir.y) * Mathf.Rad2Deg;
+        // —охран€ем начальные углы вращени€ камеры
+        Vector3 initialEuler = transform.eulerAngles;
+        initialYaw = initialEuler.y;
+        initialPitch = initialEuler.x;
+
+        // ”станавливаем текущие углы равными начальным
+        yaw = initialYaw;
+        pitch = initialPitch;
     }
 
     void LateUpdate()
@@ -72,14 +80,12 @@ public class CameraOrbit : MonoBehaviour
 
     void FollowTarget()
     {
-        Vector3 rotatedOffset = target.rotation * followOffset;
-        Vector3 desiredPosition = target.position + rotatedOffset;
-
+        // ѕросто следуем за целью, сохран€€ начальное смещение и вращение
+        Vector3 desiredPosition = target.position + followOffset;
         transform.position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * followSmoothness);
 
-        Quaternion tiltRotation = Quaternion.Euler(cameraTilt, 0f, 0f);
-        Quaternion desiredRotation = target.rotation * tiltRotation;
-
+        // —охран€ем начальное вращение камеры
+        Quaternion desiredRotation = Quaternion.Euler(initialPitch, initialYaw, 0);
         transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, Time.deltaTime * followSmoothness);
     }
 }
