@@ -5665,25 +5665,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jetStartPoint: {fileID: 762040752}
-  waterJetPrefab: {fileID: 8832379924052204505, guid: 0566e1c57ea98ab4387132cf0c01cd1a, type: 3}
-  jetSpeed: 5
-  arcHeight: 0.52
-  waterCost: 1
+  sredstvoJetPrefab: {fileID: 8832379924052204505, guid: 0566e1c57ea98ab4387132cf0c01cd1a, type: 3}
+  playerCamera: {fileID: 373590030}
+  jetSpeed: 10
+  launchForce: 15
+  attackRange: 10
+  sredstvoCost: 1
   damageAmount: 50
   enemyLayer:
     serializedVersion: 2
     m_Bits: 16384
-  attackRange: 1
-  showRangeInEditor: 1
-  wheelSensitivity: 30
-  maxAimAngle: 35
-  invertWheelAim: 0
-  trajectoryRenderer: {fileID: 328649536}
-  trajectoryPoints: 30
-  validTrajectoryColor: {r: 0, g: 1, b: 1, a: 1}
-  invalidTrajectoryColor: {r: 1, g: 0, b: 0, a: 1}
-  waterSplashEffect: {fileID: 1285461008595968975, guid: 673dd86dc0590e84a976de2f8dc35a63, type: 3}
-  speaker: {fileID: 0}
+  splashEffect: {fileID: 8443902689463427184, guid: 421020608d92d594ebcea3cc45882202, type: 3}
 --- !u!114 &328649548
 MonoBehaviour:
   m_ObjectHideFlags: 0

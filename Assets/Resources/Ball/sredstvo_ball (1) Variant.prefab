@@ -96,5 +96,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifeTime: 12
-  trailEffect: {fileID: 0}
+  trailEffect: {fileID: 8443902689463427184, guid: 421020608d92d594ebcea3cc45882202, type: 3}
   impactEffect: {fileID: 8443902689463427184, guid: 421020608d92d594ebcea3cc45882202, type: 3}

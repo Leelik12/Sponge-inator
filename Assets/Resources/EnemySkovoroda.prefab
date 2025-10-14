@@ -115,7 +115,7 @@ MonoBehaviour:
   maxHealth: 100
   deathEffect: {fileID: 5056385361940353899, guid: 5831d4dc964245b4d935906496064f8f, type: 3}
   destroyOnDeath: 1
-  destroyDelay: 1.5
+  destroyDelay: 0.5
   showDebugLogs: 1
   voice: {fileID: 0}
 --- !u!136 &3995493917378292548
@@ -160,8 +160,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.6701832, y: 0.5728024, z: 0.17710257}
-  m_Center: {x: 0.02279377, y: 0.23876816, z: 0.08415532}
+  m_Size: {x: 0.52705145, y: 0.5728024, z: 0.17710257}
+  m_Center: {x: 0.006264448, y: 0.23876816, z: 0.08415532}
 --- !u!1 &432664567107396715
 GameObject:
   m_ObjectHideFlags: 0
