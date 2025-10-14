@@ -27,7 +27,7 @@ public class GubkaWater : MonoBehaviour
         movement = GetComponent<GubkaMovement>();
         baseScale = transform.localScale;
         baseSpeed = movement.moveSpeed;
-
+        currentWater = 0.3f;
         if (waterBar != null)
         {
             waterBar.minValue = 0f;
@@ -37,7 +37,7 @@ public class GubkaWater : MonoBehaviour
     }
     private void Update()
     {
-        //PlayerDie();
+        PlayerDie();
     }
 
     void OnTriggerStay(Collider other)
