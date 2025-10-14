@@ -60,12 +60,22 @@ public class GubkaMovement : MonoBehaviour
 
     void HandleMovement()
     {
-        float moveInput = 0f;
-        if (Input.GetKey(KeyCode.W)) moveInput = -1f;
-        if (Input.GetKey(KeyCode.S)) moveInput = 1f;
+        Vector3 move = Vector3.zero;
 
-        // Используем правый вектор губки для движения (на 90 градусов от forward)
-        Vector3 move = transform.right * moveInput * moveSpeed * Time.fixedDeltaTime;
+        // Передвижение вперед/назад (W/S)
+        if (Input.GetKey(KeyCode.W)) move += -transform.right;
+        if (Input.GetKey(KeyCode.S)) move += transform.right;
+
+        // Передвижение влево/вправо (A/D)  
+        if (Input.GetKey(KeyCode.A)) move += -transform.forward;
+        if (Input.GetKey(KeyCode.D)) move += transform.forward;
+
+        // Нормализуем вектор, чтобы диагональное движение не было быстрее
+        if (move != Vector3.zero)
+            move = move.normalized;
+
+        // Применяем скорость и время
+        move *= moveSpeed * Time.fixedDeltaTime;
         rb.MovePosition(rb.position + move);
 
         velocitySmoothing = Vector3.Lerp(velocitySmoothing, move, 0.2f);

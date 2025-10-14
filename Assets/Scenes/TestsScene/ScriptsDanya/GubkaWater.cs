@@ -69,7 +69,7 @@ public class GubkaWater : MonoBehaviour
         UpdateUI();
     }
 
-    private void UpdateScaleAndSpeed()
+    public void UpdateScaleAndSpeed()
     {
         // Увеличиваем размер губки в зависимости от количества воды
         float growth = 1f + (currentWater / maxWaterCapacity) * waterGrowthFactor;

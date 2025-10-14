@@ -203,6 +203,9 @@ public class WaterJetAttack : MonoBehaviour
             gubkaWater.currentWater -= waterCost;
             gubkaWater.UpdateUI(); // Обновляем UI воды
 
+            // ДОБАВИТЬ ЭТУ СТРОКУ:
+            gubkaWater.UpdateScaleAndSpeed(); // Обновляем масштаб и скорость
+
             // Сохраняем направление прицела после выстрела
             savedVerticalAngle = currentVerticalAngle;
             savedAimDirection = currentAimDirection;
