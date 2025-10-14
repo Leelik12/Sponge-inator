@@ -93,7 +93,7 @@ public class SredstvoJetDamage : MonoBehaviour
         // Уведомляем контроллер атаки о попадании
         if (attackController != null)
         {
-            attackController.OnWaterJetHit(transform.position, enemyCollider);
+            attackController.OnSredstvoJetHit(transform.position, enemyCollider);
         }
 
         // Отключаем дальнейшие проверки
