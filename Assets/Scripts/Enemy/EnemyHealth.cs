@@ -5,7 +5,7 @@ public class EnemyHealth : MonoBehaviour
 {
     [Header("Health Settings")]
     public float maxHealth = 100f;
-    private float currentHealth;
+    [SerializeField] private float currentHealth;
 
     [Header("Death Settings")]
     public GameObject deathEffect; // эффект смерти (например, частицы)

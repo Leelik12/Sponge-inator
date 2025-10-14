@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2214767739920596970, guid: a4b53ff19d5bde343ac7d85bb51fb1b0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.50106
+      value: 13.559
       objectReference: {fileID: 0}
     - target: {fileID: 2214767739920596970, guid: a4b53ff19d5bde343ac7d85bb51fb1b0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.25
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2214767739920596970, guid: a4b53ff19d5bde343ac7d85bb51fb1b0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -15.472542
+      value: -4.392
       objectReference: {fileID: 0}
     - target: {fileID: 2214767739920596970, guid: a4b53ff19d5bde343ac7d85bb51fb1b0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -60,17 +60,22 @@ PrefabInstance:
       propertyPath: InitialModule.startColor.maxColor.r
       value: 0.30980393
       objectReference: {fileID: 0}
+    - target: {fileID: 5750494349657303613, guid: a4b53ff19d5bde343ac7d85bb51fb1b0, type: 3}
+      propertyPath: m_Radius
+      value: 1.8
+      objectReference: {fileID: 0}
     - target: {fileID: 7013596926864501857, guid: a4b53ff19d5bde343ac7d85bb51fb1b0, type: 3}
       propertyPath: m_Name
       value: sredstvo_ball (1) Variant
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6794695207994117670, guid: a4b53ff19d5bde343ac7d85bb51fb1b0, type: 3}
+    - {fileID: 5750494349657303613, guid: a4b53ff19d5bde343ac7d85bb51fb1b0, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7013596926864501857, guid: a4b53ff19d5bde343ac7d85bb51fb1b0, type: 3}
-      insertIndex: 3
+      insertIndex: -1
       addedObject: {fileID: 7908057433411745117}
   m_SourcePrefab: {fileID: 100100000, guid: a4b53ff19d5bde343ac7d85bb51fb1b0, type: 3}
 --- !u!1 &8832379924052204505 stripped

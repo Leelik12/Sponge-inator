@@ -42,11 +42,13 @@ public class WaterJetAttack : MonoBehaviour
     // Только вертикальное прицеливание через колесико мыши
     private float currentVerticalAngle = 0f;
     private float savedVerticalAngle = 0f;
+    private float lastMouseWheelValue = 0f; // Для отслеживания изменений колесика
 
     // Свойство для доступа к дистанции атаки из других скриптов
     public float AttackRange => attackRange;
 
     public HeroVoice speaker;
+
     void Start()
     {
         speaker = GetComponent<HeroVoice>();
@@ -70,7 +72,11 @@ public class WaterJetAttack : MonoBehaviour
         baseAimDirection = Quaternion.Euler(0, -90, 0) * transform.forward; // Поворачиваем на -90 градусов
         currentAimDirection = baseAimDirection;
         savedAimDirection = baseAimDirection;
+
+        // Инициализируем последнее значение колесика
+        lastMouseWheelValue = Input.mouseScrollDelta.y;
     }
+
     private void OnEnable()
     {
         // Настраиваем LineRenderer если он есть
@@ -80,6 +86,7 @@ public class WaterJetAttack : MonoBehaviour
             trajectoryRenderer.enabled = false;
         }
     }
+
     void Update()
     {
         // Обработка прицеливания (правая кнопка мыши)
@@ -98,7 +105,8 @@ public class WaterJetAttack : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             isAiming = true;
-            baseAimDirection = Quaternion.Euler(0, -90, 0) * transform.forward; // Всегда поворачиваем на -90 градусов
+            // Обновляем базовое направление при каждом начале прицеливания
+            UpdateBaseAimDirection();
 
             // Восстанавливаем сохраненное направление прицела, если оно есть
             if (hasSavedAim)
@@ -144,25 +152,41 @@ public class WaterJetAttack : MonoBehaviour
         }
     }
 
+    private void UpdateBaseAimDirection()
+    {
+        // Всегда обновляем базовое направление относительно текущего поворота игрока
+        baseAimDirection = Quaternion.Euler(0, -90, 0) * transform.forward;
+        baseAimDirection.Normalize();
+    }
+
     private void UpdateAimDirection()
     {
-        // Получаем ввод от колесика мыши
-        float mouseWheel = Input.GetAxis("Mouse ScrollWheel") * wheelSensitivity;
+        // Получаем ввод от колесика мыши с проверкой на реальное изменение
+        float currentMouseWheel = Input.mouseScrollDelta.y;
 
-        // Инвертируем управление, если нужно
-        if (invertWheelAim)
+        // Фильтруем случайные колебания и ложные срабатывания
+        if (Mathf.Abs(currentMouseWheel) > 0.01f && currentMouseWheel != lastMouseWheelValue)
         {
-            mouseWheel = -mouseWheel;
+            float mouseWheel = currentMouseWheel * wheelSensitivity;
+
+            // Инвертируем управление, если нужно
+            if (invertWheelAim)
+            {
+                mouseWheel = -mouseWheel;
+            }
+
+            // Обновляем вертикальный угол только при реальном изменении колесика
+            currentVerticalAngle += mouseWheel;
+
+            // Ограничиваем угол для предотвращения тряски
+            currentVerticalAngle = Mathf.Clamp(currentVerticalAngle, -maxAimAngle, maxAimAngle);
+
+            // Обновляем направление прицела на основе угла
+            UpdateAimDirectionFromAngle();
         }
 
-        // Обновляем вертикальный угол
-        currentVerticalAngle += mouseWheel;
-
-        // Ограничиваем угол для предотвращения тряски
-        currentVerticalAngle = Mathf.Clamp(currentVerticalAngle, -maxAimAngle, maxAimAngle);
-
-        // Обновляем направление прицела на основе угла
-        UpdateAimDirectionFromAngle();
+        // Сохраняем текущее значение колесика для следующего кадра
+        lastMouseWheelValue = currentMouseWheel;
     }
 
     private void UpdateAimDirectionFromAngle()
@@ -171,6 +195,7 @@ public class WaterJetAttack : MonoBehaviour
         // Используем локальную правую ось игрока для вертикального вращения
         Vector3 right = transform.right; // Локальная правая ось игрока
 
+        // Начинаем с актуального базового направления
         currentAimDirection = baseAimDirection;
 
         // Только вертикальное вращение - вокруг локальной правой оси игрока
@@ -212,8 +237,6 @@ public class WaterJetAttack : MonoBehaviour
             ShootWaterJet();
             gubkaWater.currentWater -= waterCost;
             gubkaWater.UpdateUI(); // Обновляем UI воды
-
-            // ДОБАВИТЬ ЭТУ СТРОКУ:
             gubkaWater.UpdateScaleAndSpeed(); // Обновляем масштаб и скорость
 
             // Сохраняем направление прицела после выстрела
@@ -230,7 +253,9 @@ public class WaterJetAttack : MonoBehaviour
 
     private void ShootWaterJet()
     {
-        speaker.SayAttack();
+        if (speaker != null)
+            speaker.SayAttack();
+
         isAttacking = true;
 
         // Создаем струю воды

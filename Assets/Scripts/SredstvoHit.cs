@@ -11,9 +11,6 @@ public class SredstvoJetProjectile : MonoBehaviour
     private Vector3 targetPosition;
     private float arcHeight;
     private float speed;
-    private float damage;
-    private LayerMask enemyLayer;
-    private SredstvoAttack attackController;
     private float maxRange;
 
     private float progress = 0f;
@@ -21,16 +18,16 @@ public class SredstvoJetProjectile : MonoBehaviour
     private bool hasHit = false;
     private float flightTime;
 
+    // Компонент для нанесения урона
+    private SredstvoJetDamage damageComponent;
+
     public void Initialize(Vector3 start, Vector3 target, float arc, float projectileSpeed,
-                          float projectileDamage, LayerMask enemies, SredstvoAttack controller, float range)
+                          int projectileDamage, LayerMask enemies, SredstvoAttack controller, float range)
     {
         startPosition = start;
         targetPosition = target;
         arcHeight = arc;
         speed = projectileSpeed;
-        damage = projectileDamage;
-        enemyLayer = enemies;
-        attackController = controller;
         maxRange = range;
 
         // Вычисляем время полета на основе расстояния и скорости
@@ -42,6 +39,10 @@ public class SredstvoJetProjectile : MonoBehaviour
 
         // Направляем снаряд в сторону цели
         transform.LookAt(targetPosition);
+
+        // Добавляем компонент для нанесения урона
+        damageComponent = gameObject.AddComponent<SredstvoJetDamage>();
+        damageComponent.Initialize(projectileDamage, enemies, controller);
     }
 
     public void Launch()
@@ -50,6 +51,10 @@ public class SredstvoJetProjectile : MonoBehaviour
 
         if (trailEffect != null)
             trailEffect.Play();
+
+        // Активируем компонент урона
+        if (damageComponent != null)
+            damageComponent.SetActive(true);
 
         // Автоматическое уничтожение через время
         Destroy(gameObject, lifeTime);
@@ -77,8 +82,12 @@ public class SredstvoJetProjectile : MonoBehaviour
                 transform.rotation = Quaternion.LookRotation(moveDirection);
         }
 
-        // Проверяем столкновения
-        CheckCollisions();
+        // Проверяем столкновения через компонент урона
+        if (damageComponent != null && damageComponent.HasHit())
+        {
+            OnHit(transform.position);
+            return;
+        }
 
         // Если достигли цели или превысили максимальную дистанцию
         if (progress >= 1f && !hasHit)
@@ -94,21 +103,9 @@ public class SredstvoJetProjectile : MonoBehaviour
         }
     }
 
-    private void CheckCollisions()
-    {
-        // Проверяем столкновения с помощью сферического каста
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 0.3f, enemyLayer);
-        foreach (var hitCollider in hitColliders)
-        {
-            OnHit(transform.position, hitCollider);
-            break; // Обрабатываем только первое столкновение
-        }
-    }
-
-    private void OnHit(Vector3 hitPoint, Collider hitCollider)
+    private void OnHit(Vector3 hitPoint)
     {
         if (hasHit) return;
-
         hasHit = true;
 
         // Останавливаем след
@@ -123,11 +120,9 @@ public class SredstvoJetProjectile : MonoBehaviour
             Destroy(impact.gameObject, 2f);
         }
 
-        // Уведомляем контроллер атаки о попадании
-        if (attackController != null)
-        {
-            attackController.OnWaterJetHit(hitPoint, hitCollider);
-        }
+        // Деактивируем компонент урона
+        if (damageComponent != null)
+            damageComponent.SetActive(false);
 
         // Уничтожаем снаряд
         Destroy(gameObject, 0.1f);
@@ -136,26 +131,23 @@ public class SredstvoJetProjectile : MonoBehaviour
     private void OnReachedTarget()
     {
         if (hasHit) return;
-
-        // Если не попали во врага, но достигли целевой точки
-        OnHit(targetPosition, null);
+        OnHit(targetPosition);
     }
 
     private void OnMaxRangeReached()
     {
         if (hasHit) return;
-
-        // Снаряд достиг максимальной дистанции
-        Vector3 endPoint = transform.position;
-        OnHit(endPoint, null);
+        OnHit(transform.position);
     }
 
-    void OnTriggerEnter(Collider other)
+    // Метод для принудительного уничтожения снаряда
+    public void ForceDestroy()
     {
-        // Дополнительная проверка триггеров
-        if (((1 << other.gameObject.layer) & enemyLayer) != 0)
-        {
-            OnHit(transform.position, other);
-        }
+        OnHit(transform.position);
     }
+
+    // Методы для получения состояния
+    public bool IsLaunched() => isLaunched;
+    public bool HasHit() => hasHit;
+    public float GetProgress() => progress;
 }

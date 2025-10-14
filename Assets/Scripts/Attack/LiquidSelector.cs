@@ -12,7 +12,7 @@ public class LiquidSelector : MonoBehaviour
     [Header("Управление жидкостями")]
     [SerializeField] private WaterJetAttack waterController;
     [SerializeField] private SredstvoAttack detergentController;
-    [SerializeField] private WaterJetAttack gasolineController;
+    [SerializeField] private FlamethrowerAttack gasolineController;
 
     [Header("Настройки")]
     [SerializeField] private Color activeColor = Color.white;

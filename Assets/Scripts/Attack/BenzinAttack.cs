@@ -4,17 +4,9 @@ public class FlamethrowerAttack : MonoBehaviour
 {
     [Header("Flamethrower Settings")]
     [SerializeField] private Transform flameStartPoint; // Точка старта огнемета
-    [SerializeField] private GameObject flameStreamPrefab; // Префаб потока огня
-    [SerializeField] private float flameRange = 10f; // Дальность огнемета
-    [SerializeField] private float flameWidth = 2f; // Ширина потока огня
+    [SerializeField] private GameObject flameStreamPrefab; // Префаб потока огня (должен иметь триггер коллайдер)
     [SerializeField] private float gasCostPerSecond = 2f; // Расход бензина в секунду
     [SerializeField] private int damagePerSecond = 15; // Урон в секунду
-    [SerializeField] private LayerMask enemyLayer; // Слой врагов
-
-    [Header("Visual Effects")]
-    [SerializeField] private ParticleSystem flameParticles; // Частицы огня
-    [SerializeField] private Light flameLight; // Свет от огня
-    [SerializeField] private AudioSource flameAudio; // Звук огнемета
 
     [Header("Attack Settings")]
     [SerializeField] private float maxFlameDuration = 5f; // Максимальная продолжительность непрерывной атаки
@@ -26,10 +18,9 @@ public class FlamethrowerAttack : MonoBehaviour
     private bool isOverheated = false;
     private float cooldownTimer = 0f;
 
-    // Для обнаружения врагов в потоке
-    private Collider[] enemyColliders = new Collider[10];
-    private float damageTickRate = 0.2f; // Как часто наносится урон (раз в 0.2 секунды)
-    private float damageTickTimer = 0f;
+    // Для визуализации струи
+    private GameObject currentFlameStream;
+    private FlameStreamController currentFlameController;
 
     public HeroVoice speaker;
 
@@ -43,15 +34,6 @@ public class FlamethrowerAttack : MonoBehaviour
             flameStartPoint = transform;
             Debug.LogWarning("FlameStartPoint not assigned! Using player transform.");
         }
-
-        // Настраиваем визуальные эффекты
-        if (flameParticles != null)
-        {
-            var main = flameParticles.main;
-            main.startLifetime = flameRange / main.startSpeed.constant;
-        }
-
-        SetFlameEffects(false);
     }
 
     void Update()
@@ -69,8 +51,8 @@ public class FlamethrowerAttack : MonoBehaviour
             return;
         }
 
-        // Начало атаки огнеметом
-        if (Input.GetMouseButtonDown(1) && !isFlameActive) // Правая кнопка мыши для огнемета
+        // Начало атаки огнеметом - ЛЕВАЯ кнопка мыши
+        if (Input.GetMouseButtonDown(0) && !isFlameActive)
         {
             TryStartFlamethrower();
         }
@@ -78,7 +60,7 @@ public class FlamethrowerAttack : MonoBehaviour
         // Продолжение атаки
         if (isFlameActive)
         {
-            if (Input.GetMouseButton(1))
+            if (Input.GetMouseButton(0))
             {
                 UpdateFlamethrower();
             }
@@ -89,7 +71,7 @@ public class FlamethrowerAttack : MonoBehaviour
         }
 
         // Остановка атаки при отпускании кнопки
-        if (Input.GetMouseButtonUp(1) && isFlameActive)
+        if (Input.GetMouseButtonUp(0) && isFlameActive)
         {
             StopFlamethrower();
         }
@@ -100,25 +82,49 @@ public class FlamethrowerAttack : MonoBehaviour
         if (isOverheated) return;
 
         // Проверяем достаточно ли бензина для начала атаки
-        if (gubkaGas.currentGas >= gasCostPerSecond * 0.1f) // Минимальное количество для начала
+        if (gubkaGas.currentGas >= gasCostPerSecond * 0.1f)
         {
             StartFlamethrower();
         }
         else
         {
             Debug.Log("Not enough gas for flamethrower!");
-            // Можно добавить звук или визуальный эффект недостатка бензина
         }
     }
 
     private void StartFlamethrower()
     {
         isFlameActive = true;
-        SetFlameEffects(true);
 
-        speaker.SayAttack(); // Голосовая реплика атаки
+        // Создаем визуальную струю огня
+        CreateFlameStream();
+
+        if (speaker != null)
+            speaker.SayAttack();
 
         Debug.Log("Flamethrower activated!");
+    }
+
+    private void CreateFlameStream()
+    {
+        // Создаем префаб струи если он назначен
+        if (flameStreamPrefab != null && currentFlameStream == null)
+        {
+            currentFlameStream = Instantiate(flameStreamPrefab, flameStartPoint.position, Quaternion.identity);
+            currentFlameStream.transform.SetParent(flameStartPoint);
+
+            // Получаем контроллер струи и настраиваем его
+            currentFlameController = currentFlameStream.GetComponent<FlameStreamController>();
+            if (currentFlameController != null)
+            {
+                currentFlameController.Initialize(this, damagePerSecond);
+                currentFlameController.SetFlameActive(true);
+            }
+            else
+            {
+                Debug.LogError("FlameStreamPrefab doesn't have FlameStreamController component!");
+            }
+        }
     }
 
     private void UpdateFlamethrower()
@@ -131,13 +137,14 @@ public class FlamethrowerAttack : MonoBehaviour
         {
             // Расходуем бензин
             gubkaGas.currentGas -= gasCostThisFrame;
-            gubkaGas.UpdateUI();
+            if (gubkaGas != null)
+                gubkaGas.UpdateUI();
 
             // Обновляем длительность атаки
             currentFlameDuration += Time.deltaTime;
 
-            // Наносим урон врагам в зоне действия
-            DamageEnemiesInFlame();
+            // Обновляем визуальную струю
+            UpdateFlameStream();
 
             // Проверяем перегрев
             if (currentFlameDuration >= maxFlameDuration)
@@ -145,9 +152,6 @@ public class FlamethrowerAttack : MonoBehaviour
                 OverheatFlamethrower();
                 return;
             }
-
-            // Обновляем визуальные эффекты
-            UpdateFlameEffects();
         }
         else
         {
@@ -157,83 +161,44 @@ public class FlamethrowerAttack : MonoBehaviour
         }
     }
 
-    private void DamageEnemiesInFlame()
+    private void UpdateFlameStream()
     {
-        damageTickTimer += Time.deltaTime;
-
-        if (damageTickTimer >= damageTickRate)
+        // Обновляем позицию и направление префаба струи
+        if (currentFlameStream != null)
         {
-            damageTickTimer = 0f;
-
-            // Находим всех врагов в конической области перед игроком
-            Vector3 flameDirection = flameStartPoint.forward;
-            Vector3 flameStart = flameStartPoint.position;
-
-            int enemyCount = Physics.OverlapSphereNonAlloc(
-                flameStart + flameDirection * flameRange * 0.5f,
-                flameRange * 0.5f,
-                enemyColliders,
-                enemyLayer
-            );
-
-            for (int i = 0; i < enemyCount; i++)
-            {
-                Collider enemyCollider = enemyColliders[i];
-                if (enemyCollider != null && IsEnemyInFlameCone(enemyCollider.transform.position))
-                {
-                    ApplyDamageToEnemy(enemyCollider);
-                }
-            }
+            currentFlameStream.transform.position = flameStartPoint.position;
+            currentFlameStream.transform.rotation = Quaternion.LookRotation(GetFlameDirection());
         }
     }
 
-    private bool IsEnemyInFlameCone(Vector3 enemyPosition)
+    private Vector3 GetFlameDirection()
     {
-        Vector3 flameDirection = flameStartPoint.forward;
-        Vector3 flameStart = flameStartPoint.position;
-        Vector3 toEnemy = enemyPosition - flameStart;
+        // Поворачиваем направление на 90 градусов влево (против часовой стрелки)
+        return Quaternion.Euler(0f, -90f, 0f) * flameStartPoint.forward;
+    }
 
-        // Проверяем расстояние
-        if (toEnemy.magnitude > flameRange) return false;
-
-        // Проверяем угол (ширину конуса)
-        float angle = Vector3.Angle(flameDirection, toEnemy.normalized);
-        float maxAngle = Mathf.Atan2(flameWidth * 0.5f, flameRange) * Mathf.Rad2Deg;
-
-        return angle <= maxAngle;
+    // Метод который будет вызываться из FlameStreamController при попадании
+    public void OnEnemyHit(Collider enemyCollider)
+    {
+        ApplyDamageToEnemy(enemyCollider);
     }
 
     private void ApplyDamageToEnemy(Collider enemyCollider)
     {
+        if (enemyCollider == null) return;
+
         EnemyHealth enemyHealth = enemyCollider.GetComponent<EnemyHealth>();
         if (enemyHealth != null)
         {
-            int tickDamage = Mathf.RoundToInt(damagePerSecond * damageTickRate);
-            enemyHealth.TakeDamage(tickDamage);
+            enemyHealth.TakeDamage(damagePerSecond);
+            Debug.Log($"Applied {damagePerSecond} damage to {enemyCollider.name}");
 
             // Можно добавить эффект горения на врага
             BurnEffect burnEffect = enemyCollider.GetComponent<BurnEffect>();
             if (burnEffect != null)
             {
-                burnEffect.Ignite(2f); // Поджигаем на 2 секунды
+                burnEffect.Ignite(2f);
             }
-        }
-    }
-
-    private void UpdateFlameEffects()
-    {
-        // Обновляем интенсивность эффектов в зависимости от продолжительности атаки
-        float intensity = Mathf.Clamp01(currentFlameDuration / maxFlameDuration);
-
-        if (flameLight != null)
-        {
-            flameLight.intensity = Mathf.Lerp(1f, 2f, intensity);
-        }
-
-        if (flameParticles != null)
-        {
-            var emission = flameParticles.emission;
-            emission.rateOverTime = Mathf.Lerp(50f, 100f, intensity);
         }
     }
 
@@ -243,11 +208,9 @@ public class FlamethrowerAttack : MonoBehaviour
         isFlameActive = false;
         cooldownTimer = overheatCooldown;
 
-        SetFlameEffects(false);
+        DestroyFlameStream();
 
         Debug.Log("Flamethrower overheated! Cooling down...");
-
-        // Можно добавить визуальный эффект перегрева
     }
 
     private void StopFlamethrower()
@@ -255,35 +218,27 @@ public class FlamethrowerAttack : MonoBehaviour
         if (!isFlameActive) return;
 
         isFlameActive = false;
-        SetFlameEffects(false);
+        DestroyFlameStream();
 
         Debug.Log("Flamethrower deactivated");
     }
 
-    private void SetFlameEffects(bool active)
+    private void DestroyFlameStream()
     {
-        // Частицы огня
-        if (flameParticles != null)
+        if (currentFlameController != null)
         {
-            if (active) flameParticles.Play();
-            else flameParticles.Stop();
+            currentFlameController.SetFlameActive(false);
+            currentFlameController = null;
         }
 
-        // Свет
-        if (flameLight != null)
+        if (currentFlameStream != null)
         {
-            flameLight.enabled = active;
-        }
-
-        // Звук
-        if (flameAudio != null)
-        {
-            if (active) flameAudio.Play();
-            else flameAudio.Stop();
+            Destroy(currentFlameStream);
+            currentFlameStream = null;
         }
     }
 
-    // Метод для принудительной остановки огнемета (например, при смерти игрока)
+    // Метод для принудительной остановки огнемета
     public void ForceStopFlamethrower()
     {
         StopFlamethrower();
@@ -305,32 +260,5 @@ public class FlamethrowerAttack : MonoBehaviour
     public bool IsOverheated()
     {
         return isOverheated;
-    }
-
-    // Визуализация зоны поражения в редакторе
-    private void OnDrawGizmosSelected()
-    {
-        if (flameStartPoint != null)
-        {
-            Gizmos.color = Color.red;
-            Vector3 flameStart = flameStartPoint.position;
-            Vector3 flameDirection = flameStartPoint.forward;
-
-            // Рисуем конус огнемета
-            Vector3 endPoint = flameStart + flameDirection * flameRange;
-            float endRadius = flameWidth * 0.5f;
-
-            Gizmos.DrawLine(flameStart, endPoint);
-            Gizmos.DrawWireSphere(endPoint, endRadius);
-
-            // Рисуем боковые границы конуса
-            Vector3 right = flameStartPoint.right * endRadius;
-            Vector3 up = flameStartPoint.up * endRadius;
-
-            Gizmos.DrawLine(flameStart, endPoint + right);
-            Gizmos.DrawLine(flameStart, endPoint - right);
-            Gizmos.DrawLine(flameStart, endPoint + up);
-            Gizmos.DrawLine(flameStart, endPoint - up);
-        }
     }
 }

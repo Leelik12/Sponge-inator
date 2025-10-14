@@ -6,6 +6,7 @@ public class FirstPersonLook : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] Transform character;
+    [SerializeField] private GubkaMovement playerMovement; // Ссылка на скрипт движения
 
     [Header("Mouse Settings")]
     public float sensitivity = 2;
@@ -32,6 +33,17 @@ public class FirstPersonLook : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
 
+        // Получаем ссылку на скрипт движения если не назначен
+        if (playerMovement == null)
+        {
+            playerMovement = character.GetComponent<GubkaMovement>();
+            if (playerMovement == null)
+            {
+                playerMovement = FindAnyObjectByType<GubkaMovement>();
+                Debug.LogWarning("GubkaMovement not assigned in inspector, searching in scene...");
+            }
+        }
+
         // Сохраняем начальные локальные параметры камеры
         SaveInitialCameraLocalTransforms();
 
@@ -57,6 +69,21 @@ public class FirstPersonLook : MonoBehaviour
 
         // Применяем начальное вращение
         ApplyRotation();
+
+        // Убеждаемся, что скрипт движения использует правильную камеру
+        if (playerMovement != null)
+        {
+            Camera mainCamera = GetComponent<Camera>();
+            if (mainCamera == null)
+                mainCamera = Camera.main;
+
+            playerMovement.SetPlayerCamera(mainCamera);
+            Debug.Log("Camera reference set in player movement");
+        }
+        else
+        {
+            Debug.LogError("Player movement reference not found!");
+        }
     }
 
     void Update()
@@ -146,8 +173,29 @@ public class FirstPersonLook : MonoBehaviour
     // Вынесено в отдельный метод для переиспользования
     private void ApplyRotation()
     {
+        // Вращаем только камеру по вертикали
         transform.localRotation = Quaternion.AngleAxis(-velocity.y, Vector3.right);
+
+        // Вращаем персонажа по горизонтали
         character.localRotation = Quaternion.AngleAxis(velocity.x, Vector3.up);
+
+        // Синхронизируем направление движения с направлением камеры
+        SyncMovementWithCamera();
+    }
+
+    private void SyncMovementWithCamera()
+    {
+        // Этот метод гарантирует, что направление движения синхронизировано с камерой
+        // Дополнительная логика синхронизации может быть добавлена здесь при необходимости
+        if (playerMovement != null)
+        {
+            // Принудительно обновляем ссылку на камеру если она была утеряна
+            Camera currentCamera = GetComponent<Camera>();
+            if (currentCamera == null)
+                currentCamera = Camera.main;
+
+            playerMovement.SetPlayerCamera(currentCamera);
+        }
     }
 
     // Настройка UI элементов
@@ -282,6 +330,19 @@ public class FirstPersonLook : MonoBehaviour
     public Vector3 GetInitialLocalEuler()
     {
         return initialLocalCameraEuler;
+    }
+
+    // Метод для принудительной установки ссылки на движение
+    public void SetPlayerMovement(GubkaMovement movement)
+    {
+        playerMovement = movement;
+        if (playerMovement != null)
+        {
+            Camera currentCamera = GetComponent<Camera>();
+            if (currentCamera == null)
+                currentCamera = Camera.main;
+            playerMovement.SetPlayerCamera(currentCamera);
+        }
     }
 
     private void OnDestroy()

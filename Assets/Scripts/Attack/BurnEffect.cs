@@ -5,7 +5,6 @@ public class BurnEffect : MonoBehaviour
     [Header("Burn Effect Settings")]
     [SerializeField] private ParticleSystem burnParticles;
     [SerializeField] private int burnDamagePerSecond = 5;
-    [SerializeField] private float burnDuration = 3f;
 
     private EnemyHealth enemyHealth;
     private bool isBurning = false;

@@ -42,11 +42,13 @@ public class SredstvoAttack : MonoBehaviour
     // Только вертикальное прицеливание через колесико мыши
     private float currentVerticalAngle = 0f;
     private float savedVerticalAngle = 0f;
+    private float lastMouseWheelValue = 0f; // Для отслеживания изменений колесика
 
     // Свойство для доступа к дистанции атаки из других скриптов
     public float AttackRange => attackRange;
 
     public HeroVoice speaker;
+
     void Start()
     {
         speaker = GetComponent<HeroVoice>();
@@ -70,7 +72,11 @@ public class SredstvoAttack : MonoBehaviour
         baseAimDirection = Quaternion.Euler(0, -90, 0) * transform.forward; // Поворачиваем на -90 градусов
         currentAimDirection = baseAimDirection;
         savedAimDirection = baseAimDirection;
+
+        // Инициализируем последнее значение колесика
+        lastMouseWheelValue = Input.mouseScrollDelta.y;
     }
+
     private void OnEnable()
     {
         // Настраиваем LineRenderer если он есть
@@ -80,6 +86,7 @@ public class SredstvoAttack : MonoBehaviour
             trajectoryRenderer.enabled = false;
         }
     }
+
     void Update()
     {
         // Обработка прицеливания (правая кнопка мыши)
@@ -98,7 +105,8 @@ public class SredstvoAttack : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             isAiming = true;
-            baseAimDirection = Quaternion.Euler(0, -90, 0) * transform.forward; // Всегда поворачиваем на -90 градусов
+            // Обновляем базовое направление при каждом начале прицеливания
+            UpdateBaseAimDirection();
 
             // Восстанавливаем сохраненное направление прицела, если оно есть
             if (hasSavedAim)
@@ -144,25 +152,41 @@ public class SredstvoAttack : MonoBehaviour
         }
     }
 
+    private void UpdateBaseAimDirection()
+    {
+        // Всегда обновляем базовое направление относительно текущего поворота игрока
+        baseAimDirection = Quaternion.Euler(0, -90, 0) * transform.forward;
+        baseAimDirection.Normalize();
+    }
+
     private void UpdateAimDirection()
     {
-        // Получаем ввод от колесика мыши
-        float mouseWheel = Input.GetAxis("Mouse ScrollWheel") * wheelSensitivity;
+        // Получаем ввод от колесика мыши с проверкой на реальное изменение
+        float currentMouseWheel = Input.mouseScrollDelta.y;
 
-        // Инвертируем управление, если нужно
-        if (invertWheelAim)
+        // Фильтруем случайные колебания и ложные срабатывания
+        if (Mathf.Abs(currentMouseWheel) > 0.01f && currentMouseWheel != lastMouseWheelValue)
         {
-            mouseWheel = -mouseWheel;
+            float mouseWheel = currentMouseWheel * wheelSensitivity;
+
+            // Инвертируем управление, если нужно
+            if (invertWheelAim)
+            {
+                mouseWheel = -mouseWheel;
+            }
+
+            // Обновляем вертикальный угол только при реальном изменении колесика
+            currentVerticalAngle += mouseWheel;
+
+            // Ограничиваем угол для предотвращения тряски
+            currentVerticalAngle = Mathf.Clamp(currentVerticalAngle, -maxAimAngle, maxAimAngle);
+
+            // Обновляем направление прицела на основе угла
+            UpdateAimDirectionFromAngle();
         }
 
-        // Обновляем вертикальный угол
-        currentVerticalAngle += mouseWheel;
-
-        // Ограничиваем угол для предотвращения тряски
-        currentVerticalAngle = Mathf.Clamp(currentVerticalAngle, -maxAimAngle, maxAimAngle);
-
-        // Обновляем направление прицела на основе угла
-        UpdateAimDirectionFromAngle();
+        // Сохраняем текущее значение колесика для следующего кадра
+        lastMouseWheelValue = currentMouseWheel;
     }
 
     private void UpdateAimDirectionFromAngle()
@@ -171,6 +195,7 @@ public class SredstvoAttack : MonoBehaviour
         // Используем локальную правую ось игрока для вертикального вращения
         Vector3 right = transform.right; // Локальная правая ось игрока
 
+        // Начинаем с актуального базового направления
         currentAimDirection = baseAimDirection;
 
         // Только вертикальное вращение - вокруг локальной правой оси игрока
@@ -198,20 +223,20 @@ public class SredstvoAttack : MonoBehaviour
             trajectoryRenderer.SetPosition(i, currentPos);
         }
 
-        // Меняем цвет в зависимости от наличия воды
-        bool hasEnoughWater = gubkaClear.currentClear >= waterCost;
-        trajectoryRenderer.startColor = hasEnoughWater ? validTrajectoryColor : invalidTrajectoryColor;
-        trajectoryRenderer.endColor = hasEnoughWater ? validTrajectoryColor : invalidTrajectoryColor;
+        // Меняем цвет в зависимости от наличия моющего средства
+        bool hasEnoughClear = gubkaClear.currentClear >= waterCost;
+        trajectoryRenderer.startColor = hasEnoughClear ? validTrajectoryColor : invalidTrajectoryColor;
+        trajectoryRenderer.endColor = hasEnoughClear ? validTrajectoryColor : invalidTrajectoryColor;
     }
 
     private void TryShootWaterJet()
     {
-        // Проверяем достаточно ли воды для атаки
+        // Проверяем достаточно ли моющего средства для атаки
         if (gubkaClear.currentClear >= waterCost)
         {
             ShootWaterJet();
             gubkaClear.currentClear -= waterCost;
-            gubkaClear.UpdateUI(); // Обновляем UI воды
+            gubkaClear.UpdateUI(); // Обновляем UI моющего средства
 
             // Сохраняем направление прицела после выстрела
             savedVerticalAngle = currentVerticalAngle;
@@ -220,17 +245,19 @@ public class SredstvoAttack : MonoBehaviour
         }
         else
         {
-            Debug.Log("Not enough water!");
-            // Можно добавить звук или визуальный эффект недостатка воды
+            Debug.Log("Not enough clear!");
+            // Можно добавить звук или визуальный эффект недостатка моющего средства
         }
     }
 
     private void ShootWaterJet()
     {
-        speaker.SayAttack();
+        if (speaker != null)
+            speaker.SayAttack();
+
         isAttacking = true;
 
-        // Создаем струю воды
+        // Создаем струю моющего средства
         GameObject SredstvoJet = Instantiate(waterJetPrefab, jetStartPoint.position, Quaternion.identity);
         SredstvoJetProjectile projectile = SredstvoJet.GetComponent<SredstvoJetProjectile>();
 
@@ -289,7 +316,7 @@ public class SredstvoAttack : MonoBehaviour
         }
     }
 
-    // Метод для вызова при попадании струи (будет вызываться из WaterJetProjectile)
+    // Метод для вызова при попадании струи (будет вызываться из SredstvoJetProjectile)
     public void OnWaterJetHit(Vector3 hitPosition, Collider hitEnemy)
     {
         // Наносим урон врагу
@@ -303,13 +330,13 @@ public class SredstvoAttack : MonoBehaviour
         }
 
         // Дополнительные эффекты при попадании
-        Debug.Log("Water jet hit at: " + hitPosition);
+        Debug.Log("Sredstvo jet hit at: " + hitPosition);
 
         // Можно добавить дополнительные эффекты: звук, частицы и т.д.
     }
 
-    // Метод для получения текущего количества воды (для визуальных эффектов)
-    public float GetCurrentWaterNormalized()
+    // Метод для получения текущего количества моющего средства (для визуальных эффектов)
+    public float GetCurrentClearNormalized()
     {
         return gubkaClear.currentClear / gubkaClear.maxClearCapacity;
     }
