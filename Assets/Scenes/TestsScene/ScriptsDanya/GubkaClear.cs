@@ -19,9 +19,10 @@ public class GubkaClear : MonoBehaviour
     private GubkaMovement movement;
 
     private bool isNeutralizing = false;
-
+    public HeroVoice player;
     void Start()
     {
+        player = GetComponent<HeroVoice>();
         fat = GetComponent<GubkaFat>();
         movement = GetComponent<GubkaMovement>();
 
@@ -55,6 +56,7 @@ public class GubkaClear : MonoBehaviour
 
     public void AbsorbClear(float amount)
     {
+        player.SaypickupSoap();
         bool fatChanged = false;
 
         // если есть жир — моющее сначала его очищает

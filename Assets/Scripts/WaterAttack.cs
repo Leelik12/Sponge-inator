@@ -46,8 +46,10 @@ public class WaterJetAttack : MonoBehaviour
     // Свойство для доступа к дистанции атаки из других скриптов
     public float AttackRange => attackRange;
 
+    public HeroVoice speaker;
     void Start()
     {
+        speaker = GetComponent<HeroVoice>();
         gubkaWater = GetComponent<GubkaWater>();
         playerCamera = Camera.main;
 
@@ -220,6 +222,7 @@ public class WaterJetAttack : MonoBehaviour
 
     private void ShootWaterJet()
     {
+        speaker.SayAttack();
         isAttacking = true;
 
         // Создаем струю воды

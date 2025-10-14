@@ -15,8 +15,10 @@ public class GubkaGas : MonoBehaviour
 
     private GubkaMovement movement;
 
+    public HeroVoice player;
     void Start()
     {
+        player = GetComponent<HeroVoice>();
         movement = GetComponent<GubkaMovement>();
 
         if (gasBar != null)
@@ -48,6 +50,7 @@ public class GubkaGas : MonoBehaviour
 
     private void AbsorbGas(float amount)
     {
+        player.SaypickupGas();
         currentGas = Mathf.Min(currentGas + amount, maxGasCapacity);
         UpdateUI();
     }

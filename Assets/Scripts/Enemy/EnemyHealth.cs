@@ -14,8 +14,10 @@ public class EnemyHealth : MonoBehaviour
     [Header("Debug")]
     public bool showDebugLogs = false;
 
+    public HeroVoice voice;
     void Start()
     {
+        voice = FindAnyObjectByType<HeroVoice>();
         currentHealth = maxHealth;
     }
 
@@ -37,6 +39,7 @@ public class EnemyHealth : MonoBehaviour
 
     void Die()
     {
+        voice.SayenemyDied();
         if (showDebugLogs)
             Debug.Log($"[EnemyHealth] {gameObject.name} погиб.");
 

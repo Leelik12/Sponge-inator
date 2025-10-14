@@ -27,6 +27,7 @@ public class HeroVoice : MonoBehaviour
     public float maxInterval = 15f;
 
     private float randomTimer;
+    private bool isPlaying = false;
 
     void Awake()
     {
@@ -36,7 +37,7 @@ public class HeroVoice : MonoBehaviour
 
     void Update()
     {
-        if (randomClips.Length > 0)
+        if (randomClips.Length > 0 && !isPlaying)
         {
             randomTimer -= Time.deltaTime;
             if (randomTimer <= 0f)
@@ -55,9 +56,20 @@ public class HeroVoice : MonoBehaviour
     private void PlayRandomClip(AudioClip[] clips)
     {
         if (clips == null || clips.Length == 0) return;
+        if (isPlaying) return; // Не воспроизводить, если уже играет другая фраза
 
         AudioClip clip = clips[Random.Range(0, clips.Length)];
+        isPlaying = true;
         audioSource.PlayOneShot(clip);
+
+        // Запустить корутину для отслеживания окончания звука
+        StartCoroutine(WaitForClipToEnd(clip.length));
+    }
+
+    private System.Collections.IEnumerator WaitForClipToEnd(float clipLength)
+    {
+        yield return new WaitForSeconds(clipLength);
+        isPlaying = false;
     }
 
     // ------------------- Методы для действий -------------------
@@ -77,8 +89,12 @@ public class HeroVoice : MonoBehaviour
     /// </summary>
     public void SayClip(AudioClip clip)
     {
-        if (clip != null)
+        if (clip != null && !isPlaying)
+        {
+            isPlaying = true;
             audioSource.PlayOneShot(clip);
+            StartCoroutine(WaitForClipToEnd(clip.length));
+        }
     }
 
     /// <summary>

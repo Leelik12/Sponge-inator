@@ -20,9 +20,11 @@ public class GubkaFat : MonoBehaviour
     private float baseSpeed;
     private PhysicsMaterial baseMaterial;
     private PhysicsMaterial fatMaterial;
+    public HeroVoice speaker;
 
     void Start()
     {
+        speaker = GetComponent<HeroVoice>();
         movement = GetComponent<GubkaMovement>();
         rb = GetComponent<Rigidbody>();
 
@@ -65,6 +67,7 @@ public class GubkaFat : MonoBehaviour
 
     public void AbsorbFat(float amount)
     {
+        speaker.SaypickupZhir();
         // Проверяем, есть ли моющее средство, которое может нейтрализовать жир
         GubkaClear clear = GetComponent<GubkaClear>();
         if (clear != null)

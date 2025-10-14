@@ -19,9 +19,11 @@ public class GubkaWater : MonoBehaviour
     private GubkaMovement movement;
     private Vector3 baseScale;
     private float baseSpeed;
+    public HeroVoice player;
 
     void Start()
     {
+        player = GetComponent<HeroVoice>();
         movement = GetComponent<GubkaMovement>();
         baseScale = transform.localScale;
         baseSpeed = movement.moveSpeed;
@@ -67,7 +69,7 @@ public class GubkaWater : MonoBehaviour
     {
         if (currentWater >= maxWaterCapacity)
             return;
-
+        player.SaypickupWater();
         currentWater = Mathf.Min(currentWater + amount, maxWaterCapacity);
         UpdateScaleAndSpeed();
         UpdateUI();
