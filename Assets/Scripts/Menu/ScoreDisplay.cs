@@ -23,6 +23,7 @@ public class ScoreDisplay : MonoBehaviour
             bestScoreText.text = StaticHolder.BestScore.ToString();
         if (lastScoreText != null)
             lastScoreText.text = StaticHolder.LastScore.ToString();
+        StaticHolder.LastScore = 0;
     }
 
 }
