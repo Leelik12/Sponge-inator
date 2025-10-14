@@ -55,7 +55,7 @@ public class GubkaGas : MonoBehaviour
         UpdateUI();
     }
 
-    private void UpdateUI()
+    internal void UpdateUI()
     {
         if (gasBar != null)
             gasBar.value = currentGas;

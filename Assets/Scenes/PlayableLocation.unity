@@ -5281,6 +5281,33 @@ MonoBehaviour:
   invalidTrajectoryColor: {r: 1, g: 0, b: 0, a: 1}
   waterSplashEffect: {fileID: 1285461008595968975, guid: 673dd86dc0590e84a976de2f8dc35a63, type: 3}
   speaker: {fileID: 0}
+--- !u!114 &328649548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328649532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e0012cff955a3d4f877d6997c2059a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flameStartPoint: {fileID: 762040752}
+  flameStreamPrefab: {fileID: 0}
+  flameRange: 10
+  flameWidth: 2
+  gasCostPerSecond: 2
+  damagePerSecond: 15
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 16384
+  flameParticles: {fileID: 0}
+  flameLight: {fileID: 0}
+  flameAudio: {fileID: 0}
+  maxFlameDuration: 5
+  overheatCooldown: 3
+  speaker: {fileID: 0}
 --- !u!1001 &329330137
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -40018,6 +40045,63 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1001 &6478006984291540138
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7002049272486890416, guid: f2213808831aaa343b6273fe6e168ae5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 13.586
+      objectReference: {fileID: 0}
+    - target: {fileID: 7002049272486890416, guid: f2213808831aaa343b6273fe6e168ae5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.422
+      objectReference: {fileID: 0}
+    - target: {fileID: 7002049272486890416, guid: f2213808831aaa343b6273fe6e168ae5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -13.261
+      objectReference: {fileID: 0}
+    - target: {fileID: 7002049272486890416, guid: f2213808831aaa343b6273fe6e168ae5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.08171845
+      objectReference: {fileID: 0}
+    - target: {fileID: 7002049272486890416, guid: f2213808831aaa343b6273fe6e168ae5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.99294496
+      objectReference: {fileID: 0}
+    - target: {fileID: 7002049272486890416, guid: f2213808831aaa343b6273fe6e168ae5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.031396043
+      objectReference: {fileID: 0}
+    - target: {fileID: 7002049272486890416, guid: f2213808831aaa343b6273fe6e168ae5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.079980135
+      objectReference: {fileID: 0}
+    - target: {fileID: 7002049272486890416, guid: f2213808831aaa343b6273fe6e168ae5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -189.048
+      objectReference: {fileID: 0}
+    - target: {fileID: 7002049272486890416, guid: f2213808831aaa343b6273fe6e168ae5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -9.557007
+      objectReference: {fileID: 0}
+    - target: {fileID: 7002049272486890416, guid: f2213808831aaa343b6273fe6e168ae5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -4.380005
+      objectReference: {fileID: 0}
+    - target: {fileID: 7005843876821539778, guid: f2213808831aaa343b6273fe6e168ae5, type: 3}
+      propertyPath: m_Name
+      value: FlameThrower
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f2213808831aaa343b6273fe6e168ae5, type: 3}
 --- !u!114 &6531068628141901285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40424,6 +40508,9 @@ PrefabInstance:
       addedObject: {fileID: 328649547}
     - targetCorrespondingSourceObject: {fileID: 3127308266361933534, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
       insertIndex: 10
+      addedObject: {fileID: 328649548}
+    - targetCorrespondingSourceObject: {fileID: 3127308266361933534, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
+      insertIndex: 11
       addedObject: {fileID: 328649534}
   m_SourcePrefab: {fileID: 100100000, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
 --- !u!224 &8425257209157257861
@@ -40612,3 +40699,4 @@ SceneRoots:
   - {fileID: 39260837}
   - {fileID: 1124630770}
   - {fileID: 1628832481}
+  - {fileID: 6478006984291540138}
