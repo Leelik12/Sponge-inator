@@ -1,4 +1,7 @@
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 using UnityEngine.UI; // понадобится для вывода уровня воды
 
 [RequireComponent(typeof(GubkaMovement))]
@@ -14,8 +17,9 @@ public class GubkaWater : MonoBehaviour
     public Slider waterBar; // ссылка на UI-слайдер, показывающий уровень воды
     public GameObject Lose;
     public GameObject Win;
-    [HideInInspector] public float currentWater = 0.3f;
-
+    [HideInInspector] public float currentWater = 3f;
+    public GubkaFat gubkaFat;
+    public float fatDamageScale;
     private GubkaMovement movement;
     private Vector3 baseScale;
     private float baseSpeed;
@@ -23,17 +27,19 @@ public class GubkaWater : MonoBehaviour
 
     void Start()
     {
+        gubkaFat = GetComponent<GubkaFat>();
         player = GetComponent<HeroVoice>();
         movement = GetComponent<GubkaMovement>();
         baseScale = transform.localScale;
         baseSpeed = movement.moveSpeed;
-        currentWater = 0.3f;
+        currentWater = 3f;
         if (waterBar != null)
         {
             waterBar.minValue = 0f;
             waterBar.maxValue = maxWaterCapacity;
             waterBar.value = currentWater;
         }
+        StartCoroutine(FatDamage());
     }
     private void Update()
     {
@@ -99,6 +105,15 @@ public class GubkaWater : MonoBehaviour
         {
             Lose.SetActive(true);
             Time.timeScale = 0f;
+        }
+    }
+    IEnumerator FatDamage()
+    {
+        while (currentWater > 0f)
+        {
+            currentWater -= fatDamageScale * gubkaFat.currentFat;
+            UpdateUI();
+            yield return new WaitForSeconds(1f);
         }
     }
 }

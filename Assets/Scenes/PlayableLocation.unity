@@ -13396,6 +13396,8 @@ MonoBehaviour:
   Lose: {fileID: 0}
   Win: {fileID: 0}
   currentWater: 0
+  gubkaFat: {fileID: 0}
+  fatDamageScale: 0
   player: {fileID: 0}
 --- !u!114 &893745501
 MonoBehaviour:
@@ -22308,6 +22310,8 @@ MonoBehaviour:
   Lose: {fileID: 0}
   Win: {fileID: 0}
   currentWater: 0
+  gubkaFat: {fileID: 0}
+  fatDamageScale: 0
   player: {fileID: 0}
 --- !u!114 &1132463518
 MonoBehaviour:
@@ -50507,6 +50511,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 160817836928634141, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.004
+      objectReference: {fileID: 0}
+    - target: {fileID: 160817836928634141, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.1184
+      objectReference: {fileID: 0}
+    - target: {fileID: 160817836928634141, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.1151
+      objectReference: {fileID: 0}
+    - target: {fileID: 160817836928634141, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.98434985
+      objectReference: {fileID: 0}
+    - target: {fileID: 160817836928634141, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.17622578
+      objectReference: {fileID: 0}
+    - target: {fileID: 160817836928634141, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 160817836928634141, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 160817836928634141, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 20.3
+      objectReference: {fileID: 0}
     - target: {fileID: 1829564030510429906, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
       propertyPath: stopNaNPropagation
       value: 1
@@ -50575,6 +50611,10 @@ PrefabInstance:
       propertyPath: waterBar
       value: 
       objectReference: {fileID: 6923013458398870999}
+    - target: {fileID: 3439867864834729646, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
+      propertyPath: fatDamageScale
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 4977546939011537877, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
       propertyPath: m_Name
       value: EffectSpawnPoint
