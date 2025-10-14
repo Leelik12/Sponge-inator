@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 6332455078460762121}
   - component: {fileID: 4743886353967256234}
   - component: {fileID: 2920736309821775487}
-  m_Layer: 0
+  - component: {fileID: 5021824050712382206}
+  m_Layer: 14
   m_Name: EnemyKnife
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,11 +113,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f43dd2d65e98e4abe4eff96151d755, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  deathEffect: {fileID: 0}
+  maxHealth: 50
+  deathEffect: {fileID: 5056385361940353899, guid: 5831d4dc964245b4d935906496064f8f, type: 3}
   destroyOnDeath: 1
   destroyDelay: 1.5
-  showDebugLogs: 0
+  showDebugLogs: 1
+  voice: {fileID: 0}
+--- !u!136 &5021824050712382206
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7174582313063555225}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.3
+  m_Height: 0.4
+  m_Direction: 1
+  m_Center: {x: 0, y: -0.101918295, z: 0}
 --- !u!1001 &1094448628630032266
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -128,6 +153,10 @@ PrefabInstance:
     - target: {fileID: 1407531378218608698, guid: 6dfa99702458ec940b19f2d3e6f86da0, type: 3}
       propertyPath: m_Name
       value: KitchenKnife
+      objectReference: {fileID: 0}
+    - target: {fileID: 1407531378218608698, guid: 6dfa99702458ec940b19f2d3e6f86da0, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 1784374298129986176, guid: 6dfa99702458ec940b19f2d3e6f86da0, type: 3}
       propertyPath: m_LocalScale.x

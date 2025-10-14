@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -1986815181575476392}
   - component: {fileID: 3995493917378292548}
   - component: {fileID: 6616834150619376475}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: EnemySkovoroda
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,7 +116,8 @@ MonoBehaviour:
   deathEffect: {fileID: 5056385361940353899, guid: 5831d4dc964245b4d935906496064f8f, type: 3}
   destroyOnDeath: 1
   destroyDelay: 1.5
-  showDebugLogs: 0
+  showDebugLogs: 1
+  voice: {fileID: 0}
 --- !u!136 &3995493917378292548
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -173,7 +174,7 @@ GameObject:
   - component: {fileID: 3436365854165365736}
   - component: {fileID: 1292594039900726461}
   - component: {fileID: 7487548234020746196}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: frying_pan
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -279,7 +280,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5507417185781873354}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -352,6 +353,10 @@ PrefabInstance:
     - target: {fileID: 3807126434987614734, guid: a677f71ab3a61844eaff0729b4ab40b7, type: 3}
       propertyPath: m_Name
       value: frying_pan
+      objectReference: {fileID: 0}
+    - target: {fileID: 3807126434987614734, guid: a677f71ab3a61844eaff0729b4ab40b7, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
