@@ -1487,7 +1487,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94d0a92b1ec0d594f944a6f1c09cb5a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
+  damage: 0.1
   cooldown: 1
   player: {fileID: 893745500}
 --- !u!65 &107383533
@@ -14045,6 +14045,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f3a66655d489c1f4da516acc28f42ed4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1583065026}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f3a66655d489c1f4da516acc28f42ed4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1583065027}
   m_SourcePrefab: {fileID: 100100000, guid: f3a66655d489c1f4da516acc28f42ed4, type: 3}
 --- !u!1001 &993809636
 PrefabInstance:
@@ -22825,6 +22828,27 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 0
+--- !u!65 &1583065027
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1583065016}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.13620563, y: 0.076734155, z: 0.09724423}
+  m_Center: {x: -0.01686807, y: 0.027306296, z: -0.0012522899}
 --- !u!1 &1592646265 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8772101952148599075, guid: 947b94e88c1025e43bbdd09ed74a3650, type: 3}

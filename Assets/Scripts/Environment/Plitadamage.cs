@@ -19,7 +19,7 @@ public class Plitadamage : MonoBehaviour
             {
                 Debug.Log("Игрок подсох");
                 timer = cooldown;
-                player.currentWater -= damage;
+                player.AbsorbWater(-damage);
             }
         }
     }
