@@ -14,11 +14,19 @@ public class EnemyHealth : MonoBehaviour
     [Header("Debug")]
     public bool showDebugLogs = false;
 
+    private WaveManager waveManager;
     public HeroVoice voice;
     void Start()
     {
         voice = FindAnyObjectByType<HeroVoice>();
         currentHealth = maxHealth;
+
+        waveManager = FindObjectOfType<WaveManager>();
+
+        if (waveManager == null && showDebugLogs)
+        {
+            Debug.LogWarning("[EnemyHealth] WaveManager не найден в сцене!");
+        }
     }
 
     /// <summary>
@@ -43,6 +51,14 @@ public class EnemyHealth : MonoBehaviour
         if (showDebugLogs)
             Debug.Log($"[EnemyHealth] {gameObject.name} погиб.");
 
+        if (waveManager != null)
+        {
+            waveManager.OnEnemyKilled();
+        }
+        else if (showDebugLogs)
+        {
+            Debug.LogWarning("[EnemyHealth] WaveManager не найден, убийство не засчитано!");
+        }
         // Ёффект смерти
         if (deathEffect != null)
             Instantiate(deathEffect, transform.position, Quaternion.identity);
@@ -51,8 +67,13 @@ public class EnemyHealth : MonoBehaviour
         // Animator anim = GetComponent<Animator>();
         // if (anim) anim.SetTrigger("Die");
         StaticHolder.LastScore++;
+
+        DisableColliders();
+
         if (destroyOnDeath)
             Destroy(gameObject, destroyDelay);
+        else
+            gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -66,5 +87,23 @@ public class EnemyHealth : MonoBehaviour
     public float GetHealthPercent()
     {
         return currentHealth / maxHealth;
+    }
+    void DisableColliders()
+    {
+        Collider[] colliders = GetComponents<Collider>();
+        foreach (Collider collider in colliders)
+        {
+            collider.enabled = false;
+        }
+
+        Collider[] childColliders = GetComponentsInChildren<Collider>();
+        foreach (Collider collider in childColliders)
+        {
+            collider.enabled = false;
+        }
+    }
+    public void ForceDeath()
+    {
+        Die();
     }
 }
