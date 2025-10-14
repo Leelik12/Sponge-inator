@@ -15,8 +15,7 @@ public class LiquidSelector : MonoBehaviour
     [SerializeField] private FlamethrowerAttack gasolineController;
 
     [Header("Настройки")]
-    [SerializeField] private Color activeColor = Color.white;
-    [SerializeField] private Color inactiveColor = new Color(1, 1, 1, 0.5f);
+    [SerializeField] private bool enableImages = true; // Включить/выключить отображение Image
 
     private LiquidType currentLiquid = LiquidType.Water;
 
@@ -85,10 +84,13 @@ public class LiquidSelector : MonoBehaviour
 
     private void DeactivateAllLiquids()
     {
-        // Отключаем UI
-        if (waterImage != null) waterImage.color = inactiveColor;
-        if (detergentImage != null) detergentImage.color = inactiveColor;
-        if (gasolineImage != null) gasolineImage.color = inactiveColor;
+        // Отключаем UI Images
+        if (enableImages)
+        {
+            if (waterImage != null) waterImage.enabled = false;
+            if (detergentImage != null) detergentImage.enabled = false;
+            if (gasolineImage != null) gasolineImage.enabled = false;
+        }
 
         // Отключаем логику жидкостей
         if (waterController != null) waterController.enabled = false;
@@ -98,19 +100,19 @@ public class LiquidSelector : MonoBehaviour
 
     private void ActivateWater()
     {
-        if (waterImage != null) waterImage.color = activeColor;
+        if (enableImages && waterImage != null) waterImage.enabled = true;
         if (waterController != null) waterController.enabled = true;
     }
 
     private void ActivateDetergent()
     {
-        if (detergentImage != null) detergentImage.color = activeColor;
+        if (enableImages && detergentImage != null) detergentImage.enabled = true;
         if (detergentController != null) detergentController.enabled = true;
     }
 
     private void ActivateGasoline()
     {
-        if (gasolineImage != null) gasolineImage.color = activeColor;
+        if (enableImages && gasolineImage != null) gasolineImage.enabled = true;
         if (gasolineController != null) gasolineController.enabled = true;
     }
 
@@ -145,5 +147,66 @@ public class LiquidSelector : MonoBehaviour
             LiquidType.Gasoline => gasolineController,
             _ => null
         };
+    }
+
+    // Методы для управления отображением Images
+    public void SetImagesEnabled(bool enabled)
+    {
+        enableImages = enabled;
+        UpdateImagesVisibility();
+    }
+
+    public bool GetImagesEnabled()
+    {
+        return enableImages;
+    }
+
+    private void UpdateImagesVisibility()
+    {
+        if (!enableImages)
+        {
+            // Выключаем все images
+            if (waterImage != null) waterImage.enabled = false;
+            if (detergentImage != null) detergentImage.enabled = false;
+            if (gasolineImage != null) gasolineImage.enabled = false;
+        }
+        else
+        {
+            // Включаем только активную жидкость
+            DeactivateAllLiquids();
+            switch (currentLiquid)
+            {
+                case LiquidType.Water:
+                    if (waterImage != null) waterImage.enabled = true;
+                    break;
+                case LiquidType.Detergent:
+                    if (detergentImage != null) detergentImage.enabled = true;
+                    break;
+                case LiquidType.Gasoline:
+                    if (gasolineImage != null) gasolineImage.enabled = true;
+                    break;
+            }
+        }
+    }
+
+    // Метод для принудительного обновления UI
+    public void RefreshUI()
+    {
+        UpdateImagesVisibility();
+    }
+
+    // Метод для скрытия/показа всех Images
+    public void ShowAllImages()
+    {
+        if (waterImage != null) waterImage.enabled = true;
+        if (detergentImage != null) detergentImage.enabled = true;
+        if (gasolineImage != null) gasolineImage.enabled = true;
+    }
+
+    public void HideAllImages()
+    {
+        if (waterImage != null) waterImage.enabled = false;
+        if (detergentImage != null) detergentImage.enabled = false;
+        if (gasolineImage != null) gasolineImage.enabled = false;
     }
 }
