@@ -36410,7 +36410,7 @@ AudioSource:
   m_GameObject: {fileID: 1762554791}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 3614572635671984226, guid: 9ea855fa9a68d644f8475ccec0636168, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
@@ -36510,7 +36510,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32997749af140004cb10b27f4037bc07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicTracks: []
+  musicTracks:
+  - {fileID: 8300000, guid: 4aee79c22569d824a8c2ba27bedc804c, type: 3}
   audioSource: {fileID: 1762554792}
   fadeDuration: 2
   shuffle: 1

@@ -232,7 +232,7 @@ public class WaterJetAttack : MonoBehaviour
     private void TryShootWaterJet()
     {
         // ѕровер€ем достаточно ли воды дл€ атаки
-        if (gubkaWater.currentWater >= waterCost)
+        if (gubkaWater.currentWater > waterCost)
         {
             ShootWaterJet();
             gubkaWater.currentWater -= waterCost;
