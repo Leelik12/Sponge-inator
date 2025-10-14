@@ -1,81 +1,82 @@
 using UnityEngine;
 using UnityEngine.Events;
-using System.Linq;
+using System.Collections;
+using Unity.VisualScripting;
 
-public class EventDrivenLevelManager : MonoBehaviour
+public class LevelCompleteByLayerPoll : MonoBehaviour
 {
-    [Tooltip("Слой, на котором находятся враги (например 'Enemy')")]
+    [Tooltip("Имя слоя, на котором находятся враги (например 'Enemy')")]
     public string enemyLayerName = "Enemy";
 
-    [Tooltip("Событие, вызываемое при завершении уровня")]
+    [Tooltip("Проверять наличие врагов раз в N секунд")]
+    public float checkInterval = 1.0f;
+
+    [Tooltip("Событие вызывается, когда врагов на сцене не осталось")]
     public UnityEvent onAllEnemiesDead;
     public GameObject winwindow;
-    private int enemyLayer;
-    private int aliveCount;
-
-    void OnEnable()
-    {
-        EnemyHealth.OnAnyDeath += OnEnemyDeath;
-    }
-
-    void OnDisable()
-    {
-        EnemyHealth.OnAnyDeath -= OnEnemyDeath;
-    }
+    int enemyLayer = -1;
+    bool completed = false;
+    Coroutine checkRoutine;
 
     void Start()
     {
-        // Определяем ID слоя
         enemyLayer = LayerMask.NameToLayer(enemyLayerName);
         if (enemyLayer == -1)
         {
-            Debug.LogError("[EventDrivenLevelManager] Слой '" + enemyLayerName + "' не найден!");
+            Debug.LogError("[LevelCompleteByLayerPoll] Layer '" + enemyLayerName + "' not found. Please add it in Project Settings -> Tags and Layers.");
+            enabled = false;
             return;
         }
 
-        // Находим всех существующих врагов по слою
-        var allObjects = FindObjectsOfType<GameObject>();
-        var enemies = allObjects.Where(o => o.layer == enemyLayer).ToArray();
+        checkRoutine = StartCoroutine(CheckLoop());
+    }
 
-        aliveCount = enemies.Length;
-
-        // Проверяем, не мертвы ли некоторые
-        foreach (var e in enemies)
+    IEnumerator CheckLoop()
+    {
+        while (!completed)
         {
-            var h = e.GetComponent<EnemyHealth>();
-            if (h != null && !h.IsAlive())
+            yield return new WaitForSeconds(checkInterval);
+            if (AreNoEnemiesLeft())
             {
-                aliveCount--;
+                completed = true;
+                Debug.Log("[EventDrivenLevelManager] All enemies dead - level complete.");
+                winwindow.SetActive(true);
+                Time.timeScale = 0f;
+                yield break;
             }
         }
-
-        Debug.Log("[EventDrivenLevelManager] Initial enemy count: " + aliveCount);
-
-        if (aliveCount <= 0)
-        {
-            LevelCompleted();
-        }
     }
 
-    void OnEnemyDeath(EnemyHealth h)
+    bool AreNoEnemiesLeft()
     {
-        // Проверяем, что объект действительно был на слое врагов
-        if (h.gameObject.layer != enemyLayer) return;
-
-        aliveCount = Mathf.Max(0, aliveCount - 1);
-        Debug.Log("[EventDrivenLevelManager] Enemy died. Remaining: " + aliveCount);
-
-        if (aliveCount == 0)
+        // Находим все объекты GameObject в сцене и проверяем их слой
+        // FindObjectsOfType<GameObject>() возвращает все игровые объекты.
+        var all = FindObjectsOfType<GameObject>();
+        for (int i = 0; i < all.Length; i++)
         {
-            LevelCompleted();
+            var go = all[i];
+            if (!go.activeInHierarchy) continue; // игнорируем неактивные объекты
+            if (go.layer == enemyLayer)
+            {
+                // найден хотя бы один враг
+                return false;
+            }
         }
+        // ничего не найдено
+        return true;
     }
 
-    void LevelCompleted()
+    // опционально: ручной вызов для немеденной проверки
+    public void ForceCheckNow()
     {
-        Debug.Log("[EventDrivenLevelManager] All enemies dead - level complete.");
-        onAllEnemiesDead?.Invoke();
-        winwindow.SetActive(true);
-        Time.timeScale = 0f;
+        if (completed) return;
+        if (AreNoEnemiesLeft())
+        {
+            completed = true;
+            Debug.Log("[EventDrivenLevelManager] All enemies dead - level complete.");
+            winwindow.SetActive(true);
+            Time.timeScale = 0f;
+        }
     }
 }
+
