@@ -14,7 +14,7 @@ public class GubkaWater : MonoBehaviour
     public Slider waterBar; // ссылка на UI-слайдер, показывающий уровень воды
     public GameObject Lose;
     public GameObject Win;
-    [HideInInspector] public float currentWater = 0f;
+    [HideInInspector] public float currentWater = 0.3f;
 
     private GubkaMovement movement;
     private Vector3 baseScale;
@@ -32,6 +32,10 @@ public class GubkaWater : MonoBehaviour
             waterBar.maxValue = maxWaterCapacity;
             waterBar.value = currentWater;
         }
+    }
+    private void Update()
+    {
+        //PlayerDie();
     }
 
     void OnTriggerStay(Collider other)

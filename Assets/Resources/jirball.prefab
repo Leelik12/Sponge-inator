@@ -5136,8 +5136,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetLayers:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 32768
   impactEffect: {fileID: 0}
+  player: {fileID: 0}
+  damage: 1
 --- !u!54 &6680694988295300646
 Rigidbody:
   m_ObjectHideFlags: 0

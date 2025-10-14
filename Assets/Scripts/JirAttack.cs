@@ -6,6 +6,8 @@ public class SimpleSphereProjectile : MonoBehaviour
     [SerializeField] private LayerMask targetLayers; // Слои для столкновения
     [SerializeField] private GameObject impactEffect; // Эффект при столкновении
 
+    public GubkaFat player;
+    public float damage;
     void Start()
     {
         // Автоматическое уничтожение через 5 секунд на всякий случай
@@ -15,9 +17,15 @@ public class SimpleSphereProjectile : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         // Проверяем столкновение с нужными слоями
-        if (((1 << collision.gameObject.layer) & targetLayers) != 0)
+        if (collision.gameObject.CompareTag("Player"))
         {
+            Debug.Log("Жир попал на губку");
             CreateImpactEffect(collision.contacts[0].point);
+
+            player = collision.gameObject.GetComponent<GubkaFat>();
+            player.AbsorbFat(damage);
+
+            Destroy(gameObject);
         }
     }
 
