@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
@@ -11,6 +12,7 @@ public class EnemyHealth : MonoBehaviour
     public bool destroyOnDeath = true;
     public float destroyDelay = 1.5f;
 
+    public static event Action<EnemyHealth> OnAnyDeath;
     [Header("Debug")]
     public bool showDebugLogs = false;
 
@@ -28,7 +30,7 @@ public class EnemyHealth : MonoBehaviour
             Debug.LogWarning("[EnemyHealth] WaveManager не найден в сцене!");
         }
     }
-
+    public bool IsAlive() => currentHealth > 0f;
     /// <summary>
     /// Наносит урон врагу.
     /// </summary>
@@ -48,6 +50,8 @@ public class EnemyHealth : MonoBehaviour
     void Die()
     {
         voice.SayenemyDied();
+        OnAnyDeath?.Invoke(this);
+
         if (showDebugLogs)
             Debug.Log($"[EnemyHealth] {gameObject.name} погиб.");
 
