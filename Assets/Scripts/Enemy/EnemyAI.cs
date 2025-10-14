@@ -29,6 +29,11 @@ public class EnemyAI : MonoBehaviour
 
     void Start()
     {
+        if (agent == null || !agent.isOnNavMesh)
+        {
+            Debug.LogWarning($"[EnemyAI] NavMeshAgent не найден или не на NavMesh у {gameObject.name}");
+            return;
+        }
         agent = GetComponent<NavMeshAgent>();
         agent.stoppingDistance = patrolStoppingDistance;
 
@@ -81,6 +86,8 @@ public class EnemyAI : MonoBehaviour
 
     void FollowPlayer()
     {
+        if (agent == null || !agent.isOnNavMesh)
+            return;
         float distance = Vector3.Distance(transform.position, player.position);
 
         if (distance > stopDistance)
@@ -105,6 +112,8 @@ public class EnemyAI : MonoBehaviour
 
     void Patrol()
     {
+        if (agent == null || !agent.isOnNavMesh || patrolPoints.Length == 0)
+            return;
         if (patrolPoints.Length == 0) return;
         if (patrolPoints == null) return;
         Vector3 targetPoint = patrolPoints[currentPatrolIndex].position;
