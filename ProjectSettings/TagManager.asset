@@ -9,6 +9,7 @@ TagManager:
   - Clear
   - Gas
   - LoseWindow
+  - EffectSpawnPoint
   layers:
   - Default
   - TransparentFX

@@ -116,7 +116,7 @@ public class GubkaClear : MonoBehaviour
         isNeutralizing = false;
     }
 
-    private void UpdateUI()
+    internal void UpdateUI()
     {
         if (clearBar != null)
             clearBar.value = currentClear;

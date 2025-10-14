@@ -2,18 +2,27 @@ using UnityEngine;
 
 public class GasSource : MonoBehaviour
 {
-    [Header("Gas Settings")]
-    public float gasAmount = 5f;           // сколько бензина в этом источнике
-    public bool destroyWhenEmpty = true;   // удалять ли объект после опустошения
+    [Header("Gas Source Settings")]
+    public float gasAmount = 5f;           // Сколько бензина содержит источник
+    public float transferRate = 2f;        // Скорость передачи бензина губке (единиц в секунду)
 
-    // Передаёт бензин губке
-    public float TransferGas(float request)
+    private bool isDepleted = false;       // Источник исчерпан?
+
+    public float TransferGas(float requestAmount)
     {
-        float given = Mathf.Min(request, gasAmount);
+        if (isDepleted)
+            return 0f;
+
+        // Сколько реально можем отдать (ограничиваем остатком)
+        float given = Mathf.Min(requestAmount, gasAmount);
         gasAmount -= given;
 
-        if (destroyWhenEmpty && gasAmount <= 0f)
-            Destroy(gameObject);
+        if (gasAmount <= 0f)
+        {
+            isDepleted = true;
+            // Отключаем визуально, но не уничтожаем, чтобы губка не "проваливалась"
+            gameObject.SetActive(false);
+        }
 
         return given;
     }

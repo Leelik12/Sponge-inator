@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class WaterJetAttack : MonoBehaviour
+public class SredstvoAttack : MonoBehaviour
 {
     [Header("Water Jet Settings")]
     [SerializeField] private Transform jetStartPoint; // Точка старта струи
@@ -29,7 +29,7 @@ public class WaterJetAttack : MonoBehaviour
     [Header("Visual Effects")]
     [SerializeField] private ParticleSystem waterSplashEffect; // Эффект брызг
 
-    private GubkaWater gubkaWater;
+    private GubkaClear gubkaClear;
     private Camera playerCamera;
     private bool isAttacking = false;
     private bool isAiming = false; // Флаг прицеливания
@@ -50,7 +50,7 @@ public class WaterJetAttack : MonoBehaviour
     void Start()
     {
         speaker = GetComponent<HeroVoice>();
-        gubkaWater = GetComponent<GubkaWater>();
+        gubkaClear = GetComponent<GubkaClear>();
         playerCamera = Camera.main;
 
         if (jetStartPoint == null)
@@ -71,7 +71,15 @@ public class WaterJetAttack : MonoBehaviour
         currentAimDirection = baseAimDirection;
         savedAimDirection = baseAimDirection;
     }
-
+    private void OnEnable()
+    {
+        // Настраиваем LineRenderer если он есть
+        if (trajectoryRenderer != null)
+        {
+            trajectoryRenderer.positionCount = trajectoryPoints;
+            trajectoryRenderer.enabled = false;
+        }
+    }
     void Update()
     {
         // Обработка прицеливания (правая кнопка мыши)
@@ -191,7 +199,7 @@ public class WaterJetAttack : MonoBehaviour
         }
 
         // Меняем цвет в зависимости от наличия воды
-        bool hasEnoughWater = gubkaWater.currentWater >= waterCost;
+        bool hasEnoughWater = gubkaClear.currentClear >= waterCost;
         trajectoryRenderer.startColor = hasEnoughWater ? validTrajectoryColor : invalidTrajectoryColor;
         trajectoryRenderer.endColor = hasEnoughWater ? validTrajectoryColor : invalidTrajectoryColor;
     }
@@ -199,14 +207,11 @@ public class WaterJetAttack : MonoBehaviour
     private void TryShootWaterJet()
     {
         // Проверяем достаточно ли воды для атаки
-        if (gubkaWater.currentWater >= waterCost)
+        if (gubkaClear.currentClear >= waterCost)
         {
             ShootWaterJet();
-            gubkaWater.currentWater -= waterCost;
-            gubkaWater.UpdateUI(); // Обновляем UI воды
-
-            // ДОБАВИТЬ ЭТУ СТРОКУ:
-            gubkaWater.UpdateScaleAndSpeed(); // Обновляем масштаб и скорость
+            gubkaClear.currentClear -= waterCost;
+            gubkaClear.UpdateUI(); // Обновляем UI воды
 
             // Сохраняем направление прицела после выстрела
             savedVerticalAngle = currentVerticalAngle;
@@ -226,8 +231,8 @@ public class WaterJetAttack : MonoBehaviour
         isAttacking = true;
 
         // Создаем струю воды
-        GameObject waterJet = Instantiate(waterJetPrefab, jetStartPoint.position, Quaternion.identity);
-        WaterJetProjectile projectile = waterJet.GetComponent<WaterJetProjectile>();
+        GameObject SredstvoJet = Instantiate(waterJetPrefab, jetStartPoint.position, Quaternion.identity);
+        SredstvoJetProjectile projectile = SredstvoJet.GetComponent<SredstvoJetProjectile>();
 
         if (projectile != null)
         {
@@ -306,7 +311,7 @@ public class WaterJetAttack : MonoBehaviour
     // Метод для получения текущего количества воды (для визуальных эффектов)
     public float GetCurrentWaterNormalized()
     {
-        return gubkaWater.currentWater / gubkaWater.maxWaterCapacity;
+        return gubkaClear.currentClear / gubkaClear.maxClearCapacity;
     }
 
     // Метод для сброса сохраненного прицела (например, при смене цели)
