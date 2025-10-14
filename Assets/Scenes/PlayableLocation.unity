@@ -5351,6 +5351,7 @@ GameObject:
   - component: {fileID: 373590028}
   - component: {fileID: 373590031}
   - component: {fileID: 373590033}
+  - component: {fileID: 373590034}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5555,6 +5556,24 @@ MonoBehaviour:
   sensitivityText: {fileID: 1901909449}
   sensitivityFormat: "\u0427\u0443\u0432\u0441\u0442\u0432\u0438\u0442\u0435\u043B\u044C\u043D\u043E\u0441\u0442\u044C:
     {0:F1}"
+--- !u!114 &373590034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 373590026}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8525da55c86ca3c43bba6a2b22bb54de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1583065017}
+  followSmoothness: 10
+  rotationSpeed: 120
+  pitchMin: -20
+  pitchMax: 60
+  cameraTilt: 22
 --- !u!1 &377544279
 GameObject:
   m_ObjectHideFlags: 0
@@ -22520,7 +22539,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxWaterCapacity: 10
   absorbSpeed: 3
-  waterGrowthFactor: 0.4
+  waterGrowthFactor: 1.35
   waterSlowFactor: 0.3
   waterBar: {fileID: 1809290977}
   Lose: {fileID: 1683154810}
