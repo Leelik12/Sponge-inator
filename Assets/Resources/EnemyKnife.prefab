@@ -116,7 +116,7 @@ MonoBehaviour:
   maxHealth: 50
   deathEffect: {fileID: 5056385361940353899, guid: 5831d4dc964245b4d935906496064f8f, type: 3}
   destroyOnDeath: 1
-  destroyDelay: 1.5
+  destroyDelay: 0.5
   showDebugLogs: 1
   voice: {fileID: 0}
 --- !u!136 &5021824050712382206
@@ -138,7 +138,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.3
+  m_Radius: 0.2
   m_Height: 0.4
   m_Direction: 1
   m_Center: {x: 0, y: -0.101918295, z: 0}
