@@ -1015,16 +1015,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flameStartPoint: {fileID: 730231674}
   flameStreamPrefab: {fileID: 0}
-  flameRange: 10
-  flameWidth: 2
   gasCostPerSecond: 2
   damagePerSecond: 15
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 16384
-  flameParticles: {fileID: 0}
-  flameLight: {fileID: 0}
-  flameAudio: {fileID: 0}
   maxFlameDuration: 5
   overheatCooldown: 3
   speaker: {fileID: 0}
