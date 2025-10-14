@@ -46,9 +46,9 @@ public class EnemyCounter : MonoBehaviour
         if (levelCompleteCanvas != null)
         {
             levelCompleteCanvas.SetActive(true);
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
         }
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         // Можно добавить звук, анимацию и т.д.
         Debug.Log("Уровень завершен!");
     }

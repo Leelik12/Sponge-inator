@@ -28,18 +28,14 @@ public class WaveManager : MonoBehaviour
 
     void InitializeWaves()
     {
-        // Отключаем все волны КРОМЕ ПЕРВОЙ
+        // Отключаем все волны кроме первой
         for (int i = 0; i < waves.Count; i++)
         {
-            // ПЕРВУЮ волну НЕ отключаем - она должна быть активна с начала
-            if (i > 0) // Начинаем со второй волны (индекс 1)
+            foreach (var enemy in waves[i].enemies)
             {
-                foreach (var enemy in waves[i].enemies)
+                if (enemy != null)
                 {
-                    if (enemy != null)
-                    {
-                        enemy.SetActive(false);
-                    }
+                    enemy.SetActive(false);
                 }
             }
             waves[i].isActive = false;
@@ -69,14 +65,6 @@ public class WaveManager : MonoBehaviour
             if (enemy != null)
             {
                 enemy.SetActive(true);
-
-                // ВОССТАНАВЛИВАЕМ здоровье врагов при активации волны
-                EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
-                if (enemyHealth != null)
-                {
-                    // Если у тебя есть метод для восстановления здоровья, вызови его здесь
-                    // enemyHealth.ResetHealth();
-                }
             }
         }
 
@@ -95,8 +83,6 @@ public class WaveManager : MonoBehaviour
         if (currentWaveIndex >= waves.Count) return;
 
         enemiesKilledInCurrentWave++;
-
-        Debug.Log($"Убито врагов в волне {currentWaveIndex + 1}: {enemiesKilledInCurrentWave}/{waves[currentWaveIndex].enemies.Count}");
 
         // Обновляем UI счетчика
         if (enemyCounter != null)
@@ -123,7 +109,6 @@ public class WaveManager : MonoBehaviour
 
         if (currentWaveIndex < waves.Count)
         {
-            Debug.Log($"Запускаем волну {currentWaveIndex + 1} через 1 секунду");
             // Запускаем следующую волну
             Invoke("StartNextWave", 1f); // Задержка 1 секунда перед следующей волной
         }
@@ -140,18 +125,7 @@ public class WaveManager : MonoBehaviour
 
     void StartNextWave()
     {
-        Debug.Log($"Активируем волну {currentWaveIndex + 1}");
         ActivateWave(currentWaveIndex);
-    }
-
-    // Для отладки - посмотреть текущее состояние
-    void Update()
-    {
-        // Для отладки - можно удалить потом
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            Debug.Log($"Текущая волна: {currentWaveIndex + 1}, Убито: {enemiesKilledInCurrentWave}");
-        }
     }
 
     // Для отладки в инспекторе

@@ -1,43 +1,35 @@
-using System;
 using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
     [Header("Health Settings")]
     public float maxHealth = 100f;
-    [SerializeField] private float currentHealth;
+    private float currentHealth;
 
     [Header("Death Settings")]
-    public GameObject deathEffect; // эффект смерти (например, частицы)
+    public GameObject deathEffect;
     public bool destroyOnDeath = true;
     public float destroyDelay = 1.5f;
 
-    public static event Action<EnemyHealth> OnAnyDeath;
     [Header("Debug")]
     public bool showDebugLogs = false;
 
     private WaveManager waveManager;
     public HeroVoice voice;
+
+    // ДОБАВЬ ЭТУ ПЕРЕМЕННУЮ
+    private bool isDead = false;
+
     void Start()
     {
         voice = FindAnyObjectByType<HeroVoice>();
         currentHealth = maxHealth;
-
         waveManager = FindObjectOfType<WaveManager>();
-
-        if (waveManager == null && showDebugLogs)
-        {
-            Debug.LogWarning("[EnemyHealth] WaveManager не найден в сцене!");
-        }
     }
-    public bool IsAlive() => currentHealth > 0f;
-    /// <summary>
-    /// Наносит урон врагу.
-    /// </summary>
-    /// <param name="damage">Количество урона</param>
+
     public void TakeDamage(int damage)
     {
-        if (damage <= 0f) return;
+        if (damage <= 0f || isDead) return; // ДОБАВЬ ПРОВЕРКУ isDead
 
         currentHealth -= damage;
         if (showDebugLogs)
@@ -49,9 +41,16 @@ public class EnemyHealth : MonoBehaviour
 
     void Die()
     {
-        voice.SayenemyDied();
-        OnAnyDeath?.Invoke(this);
+        // ДОБАВЬ ЭТУ ПРОВЕРКУ
+        if (isDead)
+        {
+            if (showDebugLogs)
+                Debug.Log($"[EnemyHealth] {gameObject.name} уже мертв, повторный вызов Die() игнорирован.");
+            return;
+        }
+        isDead = true;
 
+        voice.SayenemyDied();
         if (showDebugLogs)
             Debug.Log($"[EnemyHealth] {gameObject.name} погиб.");
 
@@ -59,39 +58,17 @@ public class EnemyHealth : MonoBehaviour
         {
             waveManager.OnEnemyKilled();
         }
-        else if (showDebugLogs)
-        {
-            Debug.LogWarning("[EnemyHealth] WaveManager не найден, убийство не засчитано!");
-        }
-        // Эффект смерти
+
         if (deathEffect != null)
             Instantiate(deathEffect, transform.position, Quaternion.identity);
 
-        // Если есть анимация — можно вызвать её тут (через Animator)
-        // Animator anim = GetComponent<Animator>();
-        // if (anim) anim.SetTrigger("Die");
         StaticHolder.LastScore++;
-
         DisableColliders();
 
         if (destroyOnDeath)
             Destroy(gameObject, destroyDelay);
-        else
-            gameObject.SetActive(false);
     }
 
-    /// <summary>
-    /// Восстанавливает здоровье (опционально)
-    /// </summary>
-    public void Heal(float amount)
-    {
-        currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
-    }
-
-    public float GetHealthPercent()
-    {
-        return currentHealth / maxHealth;
-    }
     void DisableColliders()
     {
         Collider[] colliders = GetComponents<Collider>();
@@ -105,9 +82,15 @@ public class EnemyHealth : MonoBehaviour
         {
             collider.enabled = false;
         }
+
+        // ДОБАВЬ ОТКЛЮЧЕНИЕ RIGIDBODY
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = true;
+            rb.detectCollisions = false;
+        }
     }
-    public void ForceDeath()
-    {
-        Die();
-    }
+
+    // Остальные методы без изменений...
 }
