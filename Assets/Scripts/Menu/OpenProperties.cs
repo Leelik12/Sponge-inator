@@ -8,10 +8,11 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject mainMenuPanel = null;
     [SerializeField] private GameObject settingsPanel = null;
     [SerializeField] private GameObject soundPanel = null;
-
+    [SerializeField] private GameObject DifficultyPanel = null;
     [SerializeField] private GameObject SensetivetyPanel = null;
 
     [Header("Buttons")]
+    [SerializeField] private Button playButton = null;
     [SerializeField] private Button settingsButton = null;
     [SerializeField] private Button soundButton = null;
 
@@ -20,7 +21,7 @@ public class MenuManager : MonoBehaviour
     [Header("Back Buttons")]
     [SerializeField] private Button backButtonSettings = null;
     [SerializeField] private Button backButtonsound = null;
-
+    [SerializeField] private Button backButtondifficulty = null;
     [SerializeField] private Button backButtonSensetivety = null;
 
     private Stack<GameObject> panelHistory = new Stack<GameObject>();
@@ -32,11 +33,13 @@ public class MenuManager : MonoBehaviour
         settingsPanel.SetActive(false);
         soundPanel.SetActive(false);
         SensetivetyPanel.SetActive(false);
+        DifficultyPanel.SetActive(false);
 
         // Назначаем переходы на кнопки
         settingsButton.onClick.AddListener(() => OpenPanel(settingsPanel));
         soundButton.onClick.AddListener(() => OpenPanel(soundPanel));
         SensetivetyButton.onClick.AddListener(() => OpenPanel(SensetivetyPanel));
+        playButton.onClick.AddListener(() => OpenPanel(DifficultyPanel));
 
         // Назначаем обработчики на backButton
         backButtonSettings.onClick.AddListener(GoBack);
@@ -56,7 +59,15 @@ public class MenuManager : MonoBehaviour
         ShowOnlyPanel(targetPanel);
 
     }
-
+    
+    public void GoToMain()
+    {
+        mainMenuPanel.SetActive(true);
+        settingsPanel.SetActive(false);
+        soundPanel.SetActive(false);
+        SensetivetyPanel.SetActive(false);
+        DifficultyPanel.SetActive(false);
+    }
     private void GoBack()
     {
         if (panelHistory.Count > 0)
