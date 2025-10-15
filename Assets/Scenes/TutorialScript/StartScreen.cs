@@ -10,6 +10,7 @@ public class StartScreen : MonoBehaviour
 
     void Start()
     {
+
         // Делаем неактивными другие канвасы при запуске
         SetOtherCanvasesActive(false);
 
