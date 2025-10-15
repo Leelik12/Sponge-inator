@@ -82,7 +82,15 @@ public class KamikazeEnemyAI : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    public void OnDamaged(Transform attacker)
+    {
+        if (hasSpottedPlayer) return;
 
+        player = attacker;
+        hasSpottedPlayer = true;
+        agent.isStopped = false;
+        Debug.Log($"[KamikazeEnemyAI] Took damage! Charging at {attacker.name}!");
+    }
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
