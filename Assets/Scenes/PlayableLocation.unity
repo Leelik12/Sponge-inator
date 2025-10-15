@@ -1601,7 +1601,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sredstwo_ex (3) Variant (4)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3505372142232602162, guid: 8f7c12b2c621f514daaa53b8e42c0585, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2549,7 +2550,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7925795481138798095, guid: f34597387d93fda44a40a1175c1c7006, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -4409,7 +4411,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sredstwo_ex (3) Variant (6)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3505372142232602162, guid: 8f7c12b2c621f514daaa53b8e42c0585, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -7732,7 +7735,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7925795481138798095, guid: f34597387d93fda44a40a1175c1c7006, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -8707,7 +8711,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Benzin_ex (2) Variant (4)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 338657240814285561, guid: 898acb47d72d81c45ba7968dfe5046cf, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -10312,7 +10317,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sredstwo_ex (3) Variant (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3505372142232602162, guid: 8f7c12b2c621f514daaa53b8e42c0585, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -17438,7 +17444,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7925795481138798095, guid: f34597387d93fda44a40a1175c1c7006, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -18215,7 +18222,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Benzin_ex (2) Variant (3)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 338657240814285561, guid: 898acb47d72d81c45ba7968dfe5046cf, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -22226,7 +22234,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Benzin_ex (2) Variant
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 338657240814285561, guid: 898acb47d72d81c45ba7968dfe5046cf, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -23308,7 +23317,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7925795481138798095, guid: f34597387d93fda44a40a1175c1c7006, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -25120,7 +25130,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Benzin_ex (2) Variant (2)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 338657240814285561, guid: 898acb47d72d81c45ba7968dfe5046cf, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -32387,7 +32398,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7925795481138798095, guid: f34597387d93fda44a40a1175c1c7006, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -39061,7 +39073,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Benzin_ex (2) Variant (6)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 338657240814285561, guid: 898acb47d72d81c45ba7968dfe5046cf, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -39352,7 +39365,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sredstwo_ex (3) Variant (3)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3505372142232602162, guid: 8f7c12b2c621f514daaa53b8e42c0585, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -41813,7 +41827,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sredstwo_ex (3) Variant (2)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3505372142232602162, guid: 8f7c12b2c621f514daaa53b8e42c0585, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -41849,7 +41864,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -42243,7 +42258,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sredstwo_ex (3) Variant (5)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3505372142232602162, guid: 8f7c12b2c621f514daaa53b8e42c0585, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -53738,7 +53754,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Benzin_ex (2) Variant (5)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 338657240814285561, guid: 898acb47d72d81c45ba7968dfe5046cf, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -54354,7 +54371,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7925795481138798095, guid: f34597387d93fda44a40a1175c1c7006, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -54727,7 +54745,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7925795481138798095, guid: f34597387d93fda44a40a1175c1c7006, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -55200,7 +55219,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sredstwo_ex (3) Variant (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3505372142232602162, guid: 8f7c12b2c621f514daaa53b8e42c0585, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -55425,8 +55445,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -5, y: 0}
-  m_SizeDelta: {x: -20, y: 0}
+  m_AnchoredPosition: {x: 0.02999878, y: 0}
+  m_SizeDelta: {x: -9.92, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &610924768977197383
 GameObject:
@@ -56089,8 +56109,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -5, y: 0}
-  m_SizeDelta: {x: -20, y: 0}
+  m_AnchoredPosition: {x: 0.040000916, y: 0}
+  m_SizeDelta: {x: -9.93, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5696119876434462103
 GameObject:
@@ -56292,8 +56312,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -5, y: 0}
-  m_SizeDelta: {x: -20, y: 0}
+  m_AnchoredPosition: {x: 0.23000336, y: 0}
+  m_SizeDelta: {x: -9.54, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6923013458398870999
 MonoBehaviour:
@@ -56562,8 +56582,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -5, y: 0}
-  m_SizeDelta: {x: -20, y: 0}
+  m_AnchoredPosition: {x: 0.08999634, y: 0}
+  m_SizeDelta: {x: -9.81, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8853582304203824427
 MonoBehaviour:
