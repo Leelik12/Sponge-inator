@@ -7,7 +7,7 @@ public class SredstvoJetProjectile : MonoBehaviour
     [SerializeField] private float lifeTime = 3f; // ����� ����� �������
     [SerializeField] private ParticleSystem trailEffect; // ������ �����
     [SerializeField] private ParticleSystem impactEffect; // ������ ���������
-
+    [SerializeField] private Animator animator;
     private Rigidbody rb;
     private LayerMask enemyLayer;
     private SredstvoAttack attackController;
@@ -28,6 +28,7 @@ public class SredstvoJetProjectile : MonoBehaviour
         SredstvoAttack controller,
         float range)
     {
+        animator = FindAnyObjectByType<Animator>();
         transform.position = start;
         Vector3 direction = (target - start).normalized;
 
@@ -58,7 +59,7 @@ public class SredstvoJetProjectile : MonoBehaviour
     {
         if (hasHit) return;
         hasHit = true;
-
+        animator.SetBool("Plevok", false);
         // �������� ��������� �� �����
         if (((1 << collision.gameObject.layer) & enemyLayer) != 0)
         {
