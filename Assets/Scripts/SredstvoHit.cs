@@ -4,9 +4,9 @@ using UnityEngine;
 public class SredstvoJetProjectile : MonoBehaviour
 {
     [Header("Projectile Settings")]
-    [SerializeField] private float lifeTime = 3f; // Время жизни снаряда
-    [SerializeField] private ParticleSystem trailEffect; // Эффект следа
-    [SerializeField] private ParticleSystem impactEffect; // Эффект попадания
+    [SerializeField] private float lifeTime = 3f; // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    [SerializeField] private ParticleSystem trailEffect; // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+    [SerializeField] private ParticleSystem impactEffect; // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
     private Rigidbody rb;
     private LayerMask enemyLayer;
@@ -16,7 +16,7 @@ public class SredstvoJetProjectile : MonoBehaviour
     private bool hasHit = false;
 
     /// <summary>
-    /// Инициализация снаряда мыла
+    /// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
     /// </summary>
     public void Initialize(
         Vector3 start,
@@ -35,22 +35,22 @@ public class SredstvoJetProjectile : MonoBehaviour
         rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
         rb.useGravity = true;
 
-        // Добавляем импульс
-        rb.velocity = direction * launchForce;
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        rb.linearVelocity = direction * launchForce;
 
         enemyLayer = enemies;
         attackController = controller;
 
-        // Добавляем компонент урона
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         damageComponent = gameObject.AddComponent<SredstvoJetDamage>();
         damageComponent.Initialize(projectileDamage, enemies, controller);
         damageComponent.SetActive(true);
 
-        // Визуальные эффекты
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         if (trailEffect != null)
             trailEffect.Play();
 
-        // Уничтожаем по времени
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         Destroy(gameObject, lifeTime);
     }
 
@@ -59,18 +59,18 @@ public class SredstvoJetProjectile : MonoBehaviour
         if (hasHit) return;
         hasHit = true;
 
-        // Проверка попадания по врагу
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         if (((1 << collision.gameObject.layer) & enemyLayer) != 0)
         {
             if (attackController != null)
                 attackController.OnSredstvoJetHit(transform.position, collision.collider);
         }
 
-        // Останавливаем след
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
         if (trailEffect != null)
             trailEffect.Stop();
 
-        // Эффект попадания
+        // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         if (impactEffect != null)
         {
             ParticleSystem impact = Instantiate(impactEffect, transform.position, Quaternion.identity);
@@ -78,16 +78,16 @@ public class SredstvoJetProjectile : MonoBehaviour
             Destroy(impact.gameObject, 2f);
         }
 
-        // Отключаем урон
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
         if (damageComponent != null)
             damageComponent.SetActive(false);
 
-        // Уничтожаем снаряд
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         Destroy(gameObject, 0.1f);
     }
 
     /// <summary>
-    /// Принудительное уничтожение (например, при отмене атаки)
+    /// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ)
     /// </summary>
     public void ForceDestroy()
     {

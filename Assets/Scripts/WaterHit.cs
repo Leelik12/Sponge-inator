@@ -4,9 +4,9 @@ using UnityEngine;
 public class WaterJetProjectile : MonoBehaviour
 {
     [Header("Projectile Settings")]
-    [SerializeField] private float lifeTime = 3f; // Время жизни снаряда
-    [SerializeField] private ParticleSystem trailEffect; // Эффект следа
-    [SerializeField] private ParticleSystem impactEffect; // Эффект попадания
+    [SerializeField] private float lifeTime = 3f; // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    [SerializeField] private ParticleSystem trailEffect; // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+    [SerializeField] private ParticleSystem impactEffect; // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
     private LayerMask enemyLayer;
     private WaterJetAttack attackController;
@@ -23,14 +23,14 @@ public class WaterJetProjectile : MonoBehaviour
         Vector3 direction = (target - start).normalized;
 
         rb = GetComponent<Rigidbody>();
-        rb.velocity = direction * launchForce; // Сила запуска через Rigidbody
-        rb.useGravity = true; // Можно включить или выключить гравитацию
+        rb.linearVelocity = direction * launchForce; // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ Rigidbody
+        rb.useGravity = true; // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
 
         enemyLayer = enemies;
         attackController = controller;
 
-        // Добавляем компонент урона
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         damageComponent = gameObject.AddComponent<WaterJetDamage>();
         damageComponent.Initialize(projectileDamage, enemies, controller);
 
