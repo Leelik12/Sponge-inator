@@ -973,6 +973,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &63205128
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 63205129}
+  m_Layer: 15
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &63205129
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 63205128}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.0739, y: 0.0136, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 328649558}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &66705072 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1562499875460225213, guid: d6e2c8bf9837afb43aaf81d2205c950c, type: 3}
@@ -5745,7 +5776,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e0012cff955a3d4f877d6997c2059a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flameStartPoint: {fileID: 762040752}
+  flameStartPoint: {fileID: 63205129}
   flameStreamPrefab: {fileID: 7005843876821539778, guid: f2213808831aaa343b6273fe6e168ae5, type: 3}
   gasCostPerSecond: 0.5
   damagePerSecond: 15
@@ -5763,6 +5794,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ba1744e3c0c8b4cb9f27a7b6b06461, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &328649558 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2318719252801328228, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
+  m_PrefabInstance: {fileID: 8399765976070731385}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &329330137
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -57055,10 +57091,17 @@ PrefabInstance:
       propertyPath: sensitivitySlider
       value: 
       objectReference: {fileID: 591008385}
+    - target: {fileID: 8850262519989194035, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
+      propertyPath: jumpForce
+      value: 2.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 4977546939011537877, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2318719252801328228, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 63205129}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3127308266361933534, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
       insertIndex: 9
