@@ -73,8 +73,9 @@ public class WaterJetAttack : MonoBehaviour
         Vector3 dir = playerCamera.transform.forward;
         Vector3 target = playerCamera.transform.position + dir * attackRange;
 
-        if (Physics.Raycast(playerCamera.transform.position, dir, out RaycastHit hit, attackRange))
+        if (Physics.Raycast(playerCamera.transform.position, dir, out RaycastHit hit, attackRange, ~LayerMask.GetMask("Player")))
             target = hit.point;
+
 
         GameObject waterJet = Instantiate(waterJetPrefab, jetStartPoint.position, Quaternion.LookRotation(dir));
         WaterJetProjectile projectile = waterJet.GetComponent<WaterJetProjectile>();

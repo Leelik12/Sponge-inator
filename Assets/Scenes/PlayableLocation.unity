@@ -6807,67 +6807,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1341528795875388296, guid: 9ce96bb9fd1f6454f828a703757f97a9, type: 3}
   m_PrefabInstance: {fileID: 1157701354}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &399724798
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 737720020}
-    m_Modifications:
-    - target: {fileID: 2920736309821775487, guid: b3af56af0171e6a4f99b4fd4f7f5f53c, type: 3}
-      propertyPath: deathEffect
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7174582313063555225, guid: b3af56af0171e6a4f99b4fd4f7f5f53c, type: 3}
-      propertyPath: m_Name
-      value: EnemyKnife (3)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7887033222486709446, guid: b3af56af0171e6a4f99b4fd4f7f5f53c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 10.218302
-      objectReference: {fileID: 0}
-    - target: {fileID: 7887033222486709446, guid: b3af56af0171e6a4f99b4fd4f7f5f53c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7887033222486709446, guid: b3af56af0171e6a4f99b4fd4f7f5f53c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -7.222849
-      objectReference: {fileID: 0}
-    - target: {fileID: 7887033222486709446, guid: b3af56af0171e6a4f99b4fd4f7f5f53c, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7887033222486709446, guid: b3af56af0171e6a4f99b4fd4f7f5f53c, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7887033222486709446, guid: b3af56af0171e6a4f99b4fd4f7f5f53c, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7887033222486709446, guid: b3af56af0171e6a4f99b4fd4f7f5f53c, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7887033222486709446, guid: b3af56af0171e6a4f99b4fd4f7f5f53c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7887033222486709446, guid: b3af56af0171e6a4f99b4fd4f7f5f53c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7887033222486709446, guid: b3af56af0171e6a4f99b4fd4f7f5f53c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: b3af56af0171e6a4f99b4fd4f7f5f53c, type: 3}
 --- !u!1001 &408457899
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11616,7 +11555,6 @@ Transform:
   - {fileID: 658818056}
   - {fileID: 770859584}
   - {fileID: 1126235755}
-  - {fileID: 1702984633}
   - {fileID: 343619294}
   - {fileID: 1393752802}
   - {fileID: 245753807}
@@ -31510,12 +31448,15 @@ MonoBehaviour:
   mainMenuPanel: {fileID: 1132308651}
   settingsPanel: {fileID: 598499180}
   soundPanel: {fileID: 303923364}
+  DifficultyPanel: {fileID: 0}
   SensetivetyPanel: {fileID: 91787041}
+  playButton: {fileID: 0}
   settingsButton: {fileID: 581547473}
   soundButton: {fileID: 551879187}
   SensetivetyButton: {fileID: 1952642513}
   backButtonSettings: {fileID: 353126774}
   backButtonsound: {fileID: 1877956136}
+  backButtondifficulty: {fileID: 0}
   backButtonSensetivety: {fileID: 1187946167}
 --- !u!114 &1390737421
 MonoBehaviour:
@@ -41337,11 +41278,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16c4aff8b3513c24c9462cbf6a2f8ee7, type: 3}
---- !u!4 &1702984633 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7887033222486709446, guid: b3af56af0171e6a4f99b4fd4f7f5f53c, type: 3}
-  m_PrefabInstance: {fileID: 399724798}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1713736044
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -55685,6 +55621,14 @@ PrefabInstance:
       propertyPath: near clip plane
       value: 0.029
       objectReference: {fileID: 0}
+    - target: {fileID: 1879956650224953379, guid: f74e95712372d20479e433edaf49850d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.0749
+      objectReference: {fileID: 0}
+    - target: {fileID: 1879956650224953379, guid: f74e95712372d20479e433edaf49850d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0947
+      objectReference: {fileID: 0}
     - target: {fileID: 3506850330967034395, guid: f74e95712372d20479e433edaf49850d, type: 3}
       propertyPath: Win
       value: 
@@ -55740,6 +55684,10 @@ PrefabInstance:
     - target: {fileID: 4556436327277803729, guid: f74e95712372d20479e433edaf49850d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4661967116042642363, guid: f74e95712372d20479e433edaf49850d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.0976
       objectReference: {fileID: 0}
     - target: {fileID: 5494603806102330693, guid: f74e95712372d20479e433edaf49850d, type: 3}
       propertyPath: waterImage

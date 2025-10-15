@@ -83,7 +83,7 @@ public class SredstvoAttack : MonoBehaviour
         Vector3 direction = playerCamera.transform.forward;
         Vector3 target = playerCamera.transform.position + direction * attackRange;
 
-        if (Physics.Raycast(playerCamera.transform.position, direction, out RaycastHit hit, attackRange))
+        if (Physics.Raycast(playerCamera.transform.position, direction, out RaycastHit hit, attackRange, ~LayerMask.GetMask("Player")))
         {
             target = hit.point;
         }
