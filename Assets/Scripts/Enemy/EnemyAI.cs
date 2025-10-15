@@ -132,7 +132,15 @@ public class EnemyAI : MonoBehaviour
             agent.destination = targetPoint;
         }
     }
+    public void OnDamaged(Transform attacker)
+    {
+        if (hasSpottedPlayer) return; // уже преследует
 
+        player = attacker;
+        hasSpottedPlayer = true;
+        agent.stoppingDistance = stopDistance;
+        Debug.Log($"[EnemyAI] {name} получил урон и начал преследовать игрока!");
+    }
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;

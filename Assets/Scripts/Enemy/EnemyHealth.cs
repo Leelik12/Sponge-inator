@@ -34,7 +34,14 @@ public class EnemyHealth : MonoBehaviour
         currentHealth -= damage;
         if (showDebugLogs)
             Debug.Log($"[EnemyHealth] {gameObject.name} получил {damage} урона. Осталось {currentHealth} HP.");
-
+        EnemyAI ai = GetComponent<EnemyAI>();
+        if (ai != null)
+        {
+            // игрок должен быть известен твоей системе урона — например, через Singleton PlayerController
+            Transform player = GameObject.FindGameObjectWithTag("Player")?.transform;
+            if (player != null)
+                ai.OnDamaged(player);
+        }
         if (currentHealth <= 0)
             Die();
     }
