@@ -5117,6 +5117,7 @@ MonoBehaviour:
   lifeTime: 12
   trailEffect: {fileID: 6878349921366690319, guid: f66e2be959a7d4e4e8b050df54d1af73, type: 3}
   impactEffect: {fileID: 3179462873282453689, guid: 252aaaac82346d44facad9f0be5e7f5a, type: 3}
+  animator: {fileID: 0}
 --- !u!135 &5750494349657303613
 SphereCollider:
   m_ObjectHideFlags: 0

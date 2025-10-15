@@ -6,7 +6,8 @@ public class WaterJetAttack : MonoBehaviour
     [SerializeField] private Transform jetStartPoint;      // Откуда летит струя
     [SerializeField] private GameObject waterJetPrefab;    // Префаб струи воды
     [SerializeField] private Camera playerCamera;          // Камера игрока
-
+    [SerializeField] private Animator animator;
+    [SerializeField] private GameObject DeathEffect;
     [Header("Settings")]
     [SerializeField] private float ShootDelay = 0.5f;
     [SerializeField] private float jetSpeed = 100f;
@@ -80,6 +81,7 @@ public class WaterJetAttack : MonoBehaviour
 
         if (projectile != null)
         {
+            animator.SetBool("Plevok", true);
             // Передаем силу снаряда
             projectile.Initialize(jetStartPoint.position, target, launchForce, jetSpeed, damageAmount, enemyLayer, this, attackRange);
         }
@@ -96,7 +98,11 @@ public class WaterJetAttack : MonoBehaviour
         {
             EnemyHealth hp = hitEnemy.GetComponent<EnemyHealth>();
             if (hp != null)
+            {
+                hp.deathEffect = DeathEffect;
                 hp.TakeDamage(damageAmount);
+                
+            }
         }
     }
 }

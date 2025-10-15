@@ -7,7 +7,7 @@ public class FlamethrowerAttack : MonoBehaviour
     [SerializeField] private GameObject flameStreamPrefab; // Префаб потока огня (должен иметь триггер коллайдер)
     [SerializeField] private float gasCostPerSecond = 2f; // Расход бензина в секунду
     [SerializeField] private int damagePerSecond = 15; // Урон в секунду
-
+    [SerializeField] private GameObject DeathEffect;
     [Header("Attack Settings")]
     [SerializeField] private float maxFlameDuration = 5f; // Максимальная продолжительность непрерывной атаки
     [SerializeField] private float overheatCooldown = 3f; // Время перезарядки после перегрева
@@ -190,15 +190,8 @@ public class FlamethrowerAttack : MonoBehaviour
         EnemyHealth enemyHealth = enemyCollider.GetComponent<EnemyHealth>();
         if (enemyHealth != null)
         {
+            enemyHealth.deathEffect = DeathEffect;
             enemyHealth.TakeDamage(damagePerSecond);
-            Debug.Log($"Applied {damagePerSecond} damage to {enemyCollider.name}");
-
-            // Можно добавить эффект горения на врага
-            BurnEffect burnEffect = enemyCollider.GetComponent<BurnEffect>();
-            if (burnEffect != null)
-            {
-                burnEffect.Ignite(2f);
-            }
         }
     }
 

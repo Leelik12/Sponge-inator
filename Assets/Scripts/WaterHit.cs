@@ -7,7 +7,7 @@ public class WaterJetProjectile : MonoBehaviour
     [SerializeField] private float lifeTime = 3f; // ����� ����� �������
     [SerializeField] private ParticleSystem trailEffect; // ������ �����
     [SerializeField] private ParticleSystem impactEffect; // ������ ���������
-
+    [SerializeField] private Animator animator;
     private LayerMask enemyLayer;
     private WaterJetAttack attackController;
     private WaterJetDamage damageComponent;
@@ -19,6 +19,7 @@ public class WaterJetProjectile : MonoBehaviour
                           float speed, int projectileDamage, LayerMask enemies,
                           WaterJetAttack controller, float range)
     {
+        animator = FindAnyObjectByType<Animator>();
         transform.position = start;
         Vector3 direction = (target - start).normalized;
 
@@ -47,7 +48,7 @@ public class WaterJetProjectile : MonoBehaviour
     {
         if (hasHit) return;
         hasHit = true;
-
+        animator.SetBool("Plevok", false);
         if (((1 << collision.gameObject.layer) & enemyLayer) != 0)
         {
             if (attackController != null)

@@ -7,7 +7,8 @@ public class SredstvoAttack : MonoBehaviour
     [SerializeField] private Transform jetStartPoint;      // Точка выстрела
     [SerializeField] private GameObject sredstvoJetPrefab; // Префаб мыльного снаряда
     [SerializeField] private Camera playerCamera;          // Камера игрока
-
+    [SerializeField] private Animator animator;
+    [SerializeField] private GameObject DeathEffect;
     [Header("Settings")]
     [SerializeField] private float ShootDelay = 0.5f;
     [SerializeField] private float jetSpeed = 60f;         // Скорость полета
@@ -92,6 +93,7 @@ public class SredstvoAttack : MonoBehaviour
 
         if (projectile != null)
         {
+            animator.SetBool("Plevok", true);
             projectile.Initialize(
                 jetStartPoint.position,
                 target,
@@ -114,7 +116,10 @@ public class SredstvoAttack : MonoBehaviour
         {
             EnemyHealth hp = hitEnemy.GetComponent<EnemyHealth>();
             if (hp != null)
+            {
+                hp.deathEffect = DeathEffect;
                 hp.TakeDamage(damageAmount);
+            }
         }
 
         // Можно добавить эффект пены на месте попадания
