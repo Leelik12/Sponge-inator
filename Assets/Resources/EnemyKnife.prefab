@@ -77,7 +77,8 @@ MonoBehaviour:
     m_Bits: 32768
   eyeHeight: 0.6
   stoppingDistance: 0.1
-  moveSpeed: 1
+  moveSpeed: 0.8
+  damage: 0.6
 --- !u!136 &4743886353967256234
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -113,10 +114,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f43dd2d65e98e4abe4eff96151d755, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
+  maxHealth: 75
   deathEffect: {fileID: 5056385361940353899, guid: 5831d4dc964245b4d935906496064f8f, type: 3}
   destroyOnDeath: 1
-  destroyDelay: 0.5
+  destroyDelay: 0
   showDebugLogs: 1
   voice: {fileID: 0}
 --- !u!136 &5021824050712382206

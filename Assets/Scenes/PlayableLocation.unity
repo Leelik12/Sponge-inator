@@ -3831,6 +3831,63 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!1001 &220570976
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 973532599621927534, guid: 8f7c12b2c621f514daaa53b8e42c0585, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 14.200712
+      objectReference: {fileID: 0}
+    - target: {fileID: 973532599621927534, guid: 8f7c12b2c621f514daaa53b8e42c0585, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.051724225
+      objectReference: {fileID: 0}
+    - target: {fileID: 973532599621927534, guid: 8f7c12b2c621f514daaa53b8e42c0585, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -13.636984
+      objectReference: {fileID: 0}
+    - target: {fileID: 973532599621927534, guid: 8f7c12b2c621f514daaa53b8e42c0585, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 973532599621927534, guid: 8f7c12b2c621f514daaa53b8e42c0585, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 973532599621927534, guid: 8f7c12b2c621f514daaa53b8e42c0585, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 973532599621927534, guid: 8f7c12b2c621f514daaa53b8e42c0585, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 973532599621927534, guid: 8f7c12b2c621f514daaa53b8e42c0585, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 973532599621927534, guid: 8f7c12b2c621f514daaa53b8e42c0585, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 973532599621927534, guid: 8f7c12b2c621f514daaa53b8e42c0585, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8244837497743069669, guid: 8f7c12b2c621f514daaa53b8e42c0585, type: 3}
+      propertyPath: m_Name
+      value: Sredstwo_ex (3) Variant
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8f7c12b2c621f514daaa53b8e42c0585, type: 3}
 --- !u!1 &225404344
 GameObject:
   m_ObjectHideFlags: 0
@@ -5666,10 +5723,11 @@ MonoBehaviour:
   jetStartPoint: {fileID: 762040752}
   sredstvoJetPrefab: {fileID: 8832379924052204505, guid: 0566e1c57ea98ab4387132cf0c01cd1a, type: 3}
   playerCamera: {fileID: 373590030}
-  jetSpeed: 10
-  launchForce: 15
+  ShootDelay: 0.6
+  jetSpeed: 8
+  launchForce: 8
   attackRange: 10
-  sredstvoCost: 1
+  sredstvoCost: 0.5
   damageAmount: 50
   enemyLayer:
     serializedVersion: 2
@@ -56821,6 +56879,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: 20.3
       objectReference: {fileID: 0}
+    - target: {fileID: 659155939157797153, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1829564030510429906, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
       propertyPath: stopNaNPropagation
       value: 1
@@ -56893,6 +56955,14 @@ PrefabInstance:
       propertyPath: fatDamageScale
       value: 0.01
       objectReference: {fileID: 0}
+    - target: {fileID: 3439867864834729646, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
+      propertyPath: waterSlowFactor
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3439867864834729646, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
+      propertyPath: waterGrowthFactor
+      value: 1.55
+      objectReference: {fileID: 0}
     - target: {fileID: 4977546939011537877, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
       propertyPath: m_Name
       value: EffectSpawnPoint
@@ -56908,6 +56978,14 @@ PrefabInstance:
     - target: {fileID: 6850081141168087091, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
       propertyPath: m_audioClip
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6891820481344114446, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.0539
+      objectReference: {fileID: 0}
+    - target: {fileID: 6891820481344114446, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0748
       objectReference: {fileID: 0}
     - target: {fileID: 7019022512199061389, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
       propertyPath: m_Antialiasing
@@ -56935,24 +57013,36 @@ PrefabInstance:
       objectReference: {fileID: 328649536}
     - target: {fileID: 7454545417773339497, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
       propertyPath: jetSpeed
-      value: 10
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7454545417773339497, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
       propertyPath: aimCamera
       value: 
       objectReference: {fileID: 373590030}
     - target: {fileID: 7454545417773339497, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
+      propertyPath: waterCost
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7454545417773339497, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
+      propertyPath: ShootDelay
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7454545417773339497, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
       propertyPath: attackRange
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7454545417773339497, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
       propertyPath: damageAmount
-      value: 25
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7454545417773339497, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
       propertyPath: playerCamera
       value: 
       objectReference: {fileID: 373590030}
+    - target: {fileID: 8091102775625753696, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8193386155954445520, guid: e840af95f7214864787ad4b3055fd4bb, type: 3}
       propertyPath: playerMovement
       value: 
@@ -57160,3 +57250,4 @@ SceneRoots:
   - {fileID: 5486225644221400260}
   - {fileID: 8399765976070731385}
   - {fileID: 39260837}
+  - {fileID: 220570976}

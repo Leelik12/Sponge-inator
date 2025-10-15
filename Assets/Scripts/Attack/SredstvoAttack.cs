@@ -9,12 +9,14 @@ public class SredstvoAttack : MonoBehaviour
     [SerializeField] private Camera playerCamera;          // Камера игрока
 
     [Header("Settings")]
+    [SerializeField] private float ShootDelay = 0.5f;
     [SerializeField] private float jetSpeed = 60f;         // Скорость полета
     [SerializeField] private float launchForce = 20f;      // Сила выстрела
     [SerializeField] private float attackRange = 30f;      // Дистанция прицела
     [SerializeField] private float sredstvoCost = 1f;      // Расход моющего средства
     [SerializeField] private int damageAmount = 10;        // Урон
     [SerializeField] private LayerMask enemyLayer;         // Слой врагов
+    private float timer;
 
     [Header("Visuals")]
     [SerializeField] private ParticleSystem splashEffect;  // Эффект всплеска (пена)
@@ -42,9 +44,11 @@ public class SredstvoAttack : MonoBehaviour
 
     private void Update()
     {
+        timer -= Time.deltaTime;
         // ЛКМ — стреляем мыльным зарядом
         if (Input.GetMouseButtonDown(0))
         {
+            timer = ShootDelay;
             TryShoot();
         }
     }

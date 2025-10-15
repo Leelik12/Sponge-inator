@@ -29,11 +29,6 @@ public class EnemyAI : MonoBehaviour
 
     void Start()
     {
-        if (agent == null || !agent.isOnNavMesh)
-        {
-            Debug.LogWarning($"[EnemyAI] NavMeshAgent не найден или не на NavMesh у {gameObject.name}");
-            return;
-        }
         agent = GetComponent<NavMeshAgent>();
         agent.stoppingDistance = patrolStoppingDistance;
 

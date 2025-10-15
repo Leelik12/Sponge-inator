@@ -13,6 +13,7 @@ public class KamikazeEnemyAI : MonoBehaviour
     public float stoppingDistance = 0.1f; // почти вплотную к игроку
     public float moveSpeed = 5f;
 
+    public float damage;
     private NavMeshAgent agent;
     private Transform player;
     private bool hasSpottedPlayer = false;
@@ -72,7 +73,9 @@ public class KamikazeEnemyAI : MonoBehaviour
             var health = player.GetComponent<GubkaWater>();
             if (health != null)
             {
-                health.maxWaterCapacity--;
+                health.maxWaterCapacity-= damage;
+                health.currentWater -= damage;
+                health.UpdateUI();
             }
 
             // ”ничтожаем себ€

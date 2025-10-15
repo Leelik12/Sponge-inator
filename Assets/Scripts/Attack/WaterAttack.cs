@@ -8,11 +8,13 @@ public class WaterJetAttack : MonoBehaviour
     [SerializeField] private Camera playerCamera;          // Камера игрока
 
     [Header("Settings")]
+    [SerializeField] private float ShootDelay = 0.5f;
     [SerializeField] private float jetSpeed = 100f;
     [SerializeField] private float attackRange = 40f;
     [SerializeField] private float waterCost = 1f;
     [SerializeField] private int damageAmount = 10;
     [SerializeField] private LayerMask enemyLayer;
+    private float timer;
 
     [Header("Visuals")]
     [SerializeField] private ParticleSystem waterSplashEffect;
@@ -34,16 +36,18 @@ public class WaterJetAttack : MonoBehaviour
 
     void Update()
     {
+        timer -= Time.deltaTime;
         // ЛКМ — выстрел
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0) && timer <=0f)
         {
+            timer = ShootDelay;
             TryShoot(jetSpeed); // Передаем скорость снаряда
         }
     }
 
     private void TryShoot(float launchForce)
     {
-        if (gubkaWater != null && gubkaWater.currentWater + 0.5f < waterCost)
+        if (gubkaWater != null && gubkaWater.currentWater < waterCost*2f)
         {
             Debug.Log("Not enough water!");
             return;
