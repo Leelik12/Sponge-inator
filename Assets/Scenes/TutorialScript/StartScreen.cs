@@ -4,7 +4,7 @@ public class StartScreen : MonoBehaviour
 {
     [Header("Стартовый экран")]
     public GameObject startScreenCanvas; // Ссылка на канвас стартового экрана
-
+    public bool menuopen = true;
     [Header("Другие канвасы (станут активны после старта)")]
     public GameObject[] otherCanvases; // Массив других канвасов
 
@@ -21,22 +21,28 @@ public class StartScreen : MonoBehaviour
 
             // Ставим игру на паузу (опционально)
             Time.timeScale = 0f;
-
+            Debug.Log("kursor");
+            UpdateCursorState(menuopen);
             // Разблокируем курсор для кнопок
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            //Cursor.lockState = CursorLockMode.None;
+            //Cursor.visible = true;
+            Debug.Log("kursor2");
         }
         else
         {
             Debug.LogError("[StartScreen] Start Canvas не назначен в инспекторе!");
         }
     }
-
+    private void Update()
+    {
+        UpdateCursorState(menuopen);
+    }
     /// <summary>
     /// Метод для кнопки "Начать игру" - закрывает стартовый экран
     /// </summary>
     public void CloseStartScreen()
     {
+        menuopen = false;
         // Скрываем стартовый канвас
         if (startScreenCanvas != null)
         {
@@ -50,8 +56,9 @@ public class StartScreen : MonoBehaviour
         Time.timeScale = 1f;
 
         // Блокируем курсор для геймплея (опционально)
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        UpdateCursorState(menuopen);
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
 
         Debug.Log("Стартовый экран закрыт, другие канвасы активированы!");
     }
@@ -87,5 +94,30 @@ public class StartScreen : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
+    }
+    private void UpdateCursorState(bool menuOpen)
+    {
+        if (menuOpen)
+        {
+            UnlockCursor(); // Разблокируем курсор для меню
+        }
+        else
+        {
+            LockCursor();
+        }
+    }
+
+    // Разблокировать курсор (для меню)
+    private void UnlockCursor()
+    {
+        Cursor.lockState = CursorLockMode.None; // Курсор свободен
+        Cursor.visible = true; // Курсор виден
+    }
+
+    // Заблокировать курсор (для игры)
+    private void LockCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked; // Курсор заблокирован в центре
+        Cursor.visible = false; // Курсор не виден
     }
 }
