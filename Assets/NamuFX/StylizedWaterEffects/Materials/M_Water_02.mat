@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 9
+  version: 10
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -92,6 +92,7 @@ Material:
     - _Cull: 0
     - _DistortionStr: 0.25
     - _DstBlend: 10
+    - _DstBlendAlpha: 10
     - _Intensity: 2
     - _MainTexRotation: 90
     - _MaskTexRotation: 0
@@ -100,6 +101,7 @@ Material:
     - _Rotation: -90
     - _SoftParticleFactor: 1
     - _SrcBlend: 5
+    - _SrcBlendAlpha: 1
     - _Surface: 1
     - _UseSoftParticle: 0
     - _ZTest: 4
